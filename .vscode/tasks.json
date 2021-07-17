@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "npm: dev",
+      "detail": "concurrently npm:dev:*"
+    },
+    {
+      "type": "npm",
+      "script": "gen",
+      "path": "web/",
+      "problemMatcher": [],
+      "label": "npm: gen - web",
+      "detail": "graphql-codegen --config codegen.yml"
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "server/",
+      "problemMatcher": [],
+      "label": "npm: dev - server",
+      "detail": "concurrently npm:dev:*"
+    }
+  ]
+}

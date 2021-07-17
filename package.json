@@ -1,0 +1,14 @@
+{
+  "name": "Fitness",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev:server": "npm run dev --prefix server",
+    "dev:web": "npm run dev --prefix web",
+    "dev": "concurrently npm:dev:*"
+  },
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
