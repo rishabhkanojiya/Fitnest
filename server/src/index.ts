@@ -13,6 +13,7 @@ import { ExerciseResolver } from "./resolvers/ExerciseResolver";
 import { SetResolver } from "./resolvers/SetResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 import { WorkoutResolver } from "./resolvers/WorkoutResolver";
+import { Workout } from "./entites/WorkOut";
 
 const main = async () => {
   await createConnection(typeOrmCOnfig);

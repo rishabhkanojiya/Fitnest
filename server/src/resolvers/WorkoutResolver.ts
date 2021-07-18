@@ -1,8 +1,9 @@
 import { Workout } from "../entites/WorkOut";
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Int, Mutation, Query, Resolver } from "type-graphql";
 import { WorkoutInput } from "./inputType/WorkoutInput";
 import { getConnection } from "typeorm";
 import { WorkOutRespone } from "./ResponseType/WorkoutResponse";
+import { MyContext } from "src/types";
 
 @Resolver()
 export class WorkoutResolver {
@@ -31,9 +32,13 @@ export class WorkoutResolver {
 
   @Mutation(() => WorkOutRespone)
   async createWorkout(
-    @Arg("input") input: WorkoutInput
+    @Arg("input") input: WorkoutInput,
+    @Ctx() { req }: MyContext
   ): Promise<WorkOutRespone> {
-    const workout = Workout.create({ ...input });
+    const workout = Workout.create({
+      ...input,
+      workoutUserId: req.session.userId,
+    });
 
     try {
       await workout.save();
@@ -54,7 +59,8 @@ export class WorkoutResolver {
   @Mutation(() => WorkOutRespone)
   async updateWorkout(
     @Arg("id", () => Int) id: number,
-    @Arg("title") title: string
+    @Arg("title") title: string,
+    @Ctx() { req }: MyContext
   ): Promise<WorkOutRespone> {
     let result = null;
 
@@ -63,8 +69,9 @@ export class WorkoutResolver {
         .createQueryBuilder()
         .update(Workout)
         .set({ title: title })
-        .where("id = :id", {
+        .where("id = :id and workoutUserId = :workoutUserId", {
           id,
+          workoutUserId: req.session.userId,
         })
         .returning("*")
         .execute();

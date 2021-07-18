@@ -27,7 +27,11 @@ export class Workout extends BaseEntity {
   @UpdateDateColumn()
   lastPerformed!: Date;
 
-  @Field(() => User)
+  @Field()
+  @Column()
+  workoutUserId: number;
+
+  @Field()
   @ManyToOne(() => User, (u) => u.workouts)
   workoutUser: User;
 
