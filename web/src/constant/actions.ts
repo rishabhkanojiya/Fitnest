@@ -6,3 +6,15 @@ export const toErrorMap = (errors): Record<string, string> => {
 
   return errMap;
 };
+
+export const trimVal = (
+  values: Record<string, string>
+): Record<string, string> => {
+  Object.keys(values).map((key: string) => {
+    if (key !== "password") {
+      values[key] = values[key].trim().toLocaleLowerCase();
+    }
+  });
+
+  return values;
+};

@@ -2,7 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React from "react";
 import InputField from "../components/InputField";
-import { toErrorMap } from "../constant/actions";
+import { toErrorMap, trimVal } from "../constant/actions";
 import { userValidator } from "../constant/utils/userValidate";
 
 interface Props {}
@@ -13,6 +13,8 @@ const Test = (props: Props) => {
       <Formik
         initialValues={{ username: "", password: "", email: "" }}
         onSubmit={async (values, { setErrors }) => {
+          console.log(values);
+          console.log(trimVal({ ...values }));
           const err = userValidator(values);
 
           if (err) {
