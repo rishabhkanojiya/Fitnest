@@ -32,7 +32,7 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
-  pasword!: string;
+  password!: string;
 
   @OneToMany(() => Workout, (w) => w.workoutUser)
   workouts: Workout[];

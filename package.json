@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "concurrently": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/validator": "^13.6.3"
   }
 }
