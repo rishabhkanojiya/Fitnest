@@ -4,8 +4,8 @@ import { FieldError } from "../inputType/FieldError";
 
 @ObjectType()
 export class UserResponse {
-  @Field(() => FieldError, { nullable: true })
-  error?: FieldError;
+  @Field(() => [FieldError], { nullable: true })
+  error?: FieldError[];
 
   @Field(() => User, { nullable: true })
   user?: User;
