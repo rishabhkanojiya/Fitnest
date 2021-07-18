@@ -2,6 +2,7 @@ import { Workout } from "../entites/WorkOut";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { WorkoutInput } from "./inputType/WorkoutInput";
 import { getConnection } from "typeorm";
+import { WorkOutRespone } from "./ResponseType/WorkoutResponse";
 
 @Resolver()
 export class WorkoutResolver {
@@ -28,27 +29,58 @@ export class WorkoutResolver {
     return workouts;
   }
 
-  @Mutation(() => Workout)
-  async createWorkout(@Arg("input") input: WorkoutInput): Promise<Workout> {
-    return Workout.create({ ...input }).save();
+  @Mutation(() => WorkOutRespone)
+  async createWorkout(
+    @Arg("input") input: WorkoutInput
+  ): Promise<WorkOutRespone> {
+    const workout = Workout.create({ ...input });
+
+    try {
+      await workout.save();
+    } catch (err) {
+      return {
+        error: [
+          {
+            errCode: err.code,
+            message: err.detail,
+          },
+        ],
+      };
+    }
+
+    return { workout };
   }
 
-  @Mutation(() => Workout)
+  @Mutation(() => WorkOutRespone)
   async updateWorkout(
     @Arg("id", () => Int) id: number,
     @Arg("title") title: string
-  ): Promise<Workout> {
-    const result = await getConnection()
-      .createQueryBuilder()
-      .update(Workout)
-      .set({ title: title })
-      .where("id = :id", {
-        id,
-      })
-      .returning("*")
-      .execute();
+  ): Promise<WorkOutRespone> {
+    let result = null;
 
-    return result.raw[0];
+    try {
+      result = await getConnection()
+        .createQueryBuilder()
+        .update(Workout)
+        .set({ title: title })
+        .where("id = :id", {
+          id,
+        })
+        .returning("*")
+        .execute();
+    } catch (err) {
+      console.log({ code: err.code });
+      return {
+        error: [
+          {
+            errCode: err.code,
+            message: err.detail,
+          },
+        ],
+      };
+    }
+
+    return { workout: result.raw[0] };
   }
 
   @Mutation(() => Boolean)

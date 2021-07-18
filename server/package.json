@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev:w": "tsc -w",
-    "dev:a": "nodemon dist/index.js",
+    "dev:s": "nodemon dist/index.js",
     "envType": "gen-env-types .env -o src/env.d.ts -e .",
     "dev": "concurrently npm:dev:*"
   },

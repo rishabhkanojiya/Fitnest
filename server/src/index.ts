@@ -11,7 +11,7 @@ import config from "./config";
 import typeOrmCOnfig from "./config/typeOrm.config";
 import { ExerciseResolver } from "./resolvers/ExerciseResolver";
 import { SetResolver } from "./resolvers/SetResolver";
-import { UserResolver } from "./resolvers/UserResolver";
+// import { UserResolver } from "./resolvers/UserResolver";
 import { WorkoutResolver } from "./resolvers/WorkoutResolver";
 
 const main = async () => {
@@ -53,7 +53,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver, WorkoutResolver, ExerciseResolver, SetResolver],
+      resolvers: [WorkoutResolver, ExerciseResolver, SetResolver],
 
       validate: false,
     }),
@@ -74,4 +74,6 @@ const main = async () => {
   });
 };
 
-main().catch((err) => console.log(err));
+main().catch((err) => {
+  console.log(err);
+});

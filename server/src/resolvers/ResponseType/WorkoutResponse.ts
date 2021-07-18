@@ -4,9 +4,9 @@ import { Workout } from "../../entites/WorkOut";
 
 @ObjectType()
 export class WorkOutRespone {
-  @Field(() => FieldError, { nullable: true })
-  error?: FieldError;
+  @Field(() => [FieldError], { nullable: true })
+  error?: FieldError[];
 
   @Field(() => Workout, { nullable: true })
-  WorkOut?: Workout;
+  workout?: Workout;
 }
