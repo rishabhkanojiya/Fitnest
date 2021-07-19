@@ -1,12 +1,31 @@
 import { Workout } from "../entites/WorkOut";
-import { Arg, Ctx, Int, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Int,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 import { WorkoutInput } from "./inputType/WorkoutInput";
 import { getConnection } from "typeorm";
 import { WorkOutRespone } from "./ResponseType/WorkoutResponse";
 import { MyContext } from "src/types";
+import { User } from "../entites/User";
 
-@Resolver()
+@Resolver(Workout)
 export class WorkoutResolver {
+  @FieldResolver(() => User)
+  workoutUser(
+    @Root() workout: Workout,
+
+    @Ctx() { userLoader }: MyContext
+  ) {
+    return userLoader.load(workout.workoutUserId);
+  }
+
   @Query(() => Workout, { nullable: true })
   async workout(
     @Arg("id", () => Int) id: number

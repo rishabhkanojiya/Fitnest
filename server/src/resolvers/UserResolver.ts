@@ -14,10 +14,19 @@ import { User } from "../entites/User";
 import { UsernamePassInput } from "./inputType/UsernamePassInput";
 import { UserResponse } from "./ResponseType/UserResponse";
 import validator from "validator";
-// import { getConnection } from "typeorm";
+import { Workout } from "../entites/WorkOut";
 
 @Resolver(User)
 export class UserResolver {
+  @FieldResolver(() => [Workout])
+  workouts(
+    @Root() user: User,
+
+    @Ctx() { workoutLoader }: MyContext
+  ) {
+    return workoutLoader.load(user.id);
+  }
+
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
     if (req.session.userId === user.id) {
@@ -33,8 +42,12 @@ export class UserResolver {
     if (!userId) {
       return null;
     }
-
     return User.findOne(userId);
+  }
+
+  @Query(() => [User], { nullable: true })
+  async allUser(@Ctx() {}: MyContext) {
+    return User.find({});
   }
 
   // @Mutation(() => UserResponse)

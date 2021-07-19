@@ -13,7 +13,8 @@ import { ExerciseResolver } from "./resolvers/ExerciseResolver";
 import { SetResolver } from "./resolvers/SetResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 import { WorkoutResolver } from "./resolvers/WorkoutResolver";
-import { Workout } from "./entites/WorkOut";
+import { UserLoader } from "./utils/dataLoaders/UserLoader";
+import { WorkoutLoader } from "./utils/dataLoaders/WorkoutLoader";
 
 const main = async () => {
   await createConnection(typeOrmCOnfig);
@@ -62,6 +63,8 @@ const main = async () => {
       req,
       res,
       redis,
+      userLoader: UserLoader(),
+      workoutLoader: WorkoutLoader(),
     }),
   });
 
