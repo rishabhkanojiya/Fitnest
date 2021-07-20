@@ -27,11 +27,11 @@ export class Exercise extends BaseEntity {
   @Column()
   bodyPart!: string;
 
-  // @Field()
-  // @Column()
-  // workoutId: number;
+  @Field()
+  @Column()
+  workoutId: number;
 
-  @Field(() => [Workout], { nullable: true })
+  // @Field(() => [Workout], { nullable: true })
   @ManyToMany(() => Workout, (w) => w.workExercise)
   workouts: Workout[];
 

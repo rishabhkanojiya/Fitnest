@@ -50,6 +50,15 @@ export class UserResolver {
     return User.find({});
   }
 
+  @Query(() => User, { nullable: true })
+  userWokouts(@Ctx() { req }: MyContext) {
+    const { userId } = req.session;
+    if (!userId) {
+      return null;
+    }
+    return User.findOne(userId);
+  }
+
   // @Mutation(() => UserResponse)
   // async changePassword(
   //   @Arg("token") token: string,

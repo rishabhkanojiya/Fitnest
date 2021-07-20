@@ -19,6 +19,10 @@ export class Set extends BaseEntity {
 
   @Field()
   @Column({ type: "int" })
+  exerciseId!: number;
+
+  @Field()
+  @Column({ type: "int" })
   setNo!: number;
 
   @Field()
@@ -39,6 +43,10 @@ export class Set extends BaseEntity {
   @Field(() => String)
   @CreateDateColumn()
   lastData: Date;
+
+  @Field(() => String)
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()

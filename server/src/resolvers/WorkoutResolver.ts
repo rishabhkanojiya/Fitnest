@@ -52,11 +52,31 @@ export class WorkoutResolver {
     // const workouts = await getConnection()
     //   .getRepository(Workout)
     //   .createQueryBuilder("w")
+    //   .where("w.workoutUserId = :id", { id })
     //   .orderBy("w.createdAt", "DESC")
     //   .take(realLimit)
     //   .getMany();
 
     // return workouts;
+  }
+
+  @Query(() => [Workout], { nullable: true })
+  async userWorkouts(
+    @Arg("limit", () => Int) limit: number,
+    @Arg("id", () => Int) id: number
+  ): Promise<Workout[] | undefined> {
+    const realLimit = Math.min(50, limit);
+    // return Workout.find({ take: realLimit });
+    // relations: ["workExercise"],
+    const workouts = await getConnection()
+      .getRepository(Workout)
+      .createQueryBuilder("w")
+      .where("w.workoutUserId = :id", { id })
+      .orderBy("w.createdAt", "DESC")
+      .take(realLimit)
+      .getMany();
+
+    return workouts;
   }
 
   @Mutation(() => WorkOutRespone)

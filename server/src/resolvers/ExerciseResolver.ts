@@ -28,6 +28,25 @@ export class ExerciseResolver {
     return Exercises;
   }
 
+  @Query(() => [Exercise], { nullable: true })
+  async workoutExercises(
+    @Arg("limit", () => Int) limit: number,
+    @Arg("id", () => Int) id: number
+  ): Promise<Exercise[] | undefined> {
+    const realLimit = Math.min(50, limit);
+    // return Workout.find({ take: realLimit });
+    // relations: ["workExercise"],
+    const exercises = await getConnection()
+      .getRepository(Exercise)
+      .createQueryBuilder("e")
+      .where("e.workoutId = :id", { id })
+      .orderBy("e.createdAt", "DESC")
+      .take(realLimit)
+      .getMany();
+
+    return exercises;
+  }
+
   @Mutation(() => Exercise)
   async createExercise(@Arg("input") input: ExerciseInput): Promise<Exercise> {
     return Exercise.create({ ...input }).save();

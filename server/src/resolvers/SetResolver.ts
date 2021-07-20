@@ -26,6 +26,24 @@ export class SetResolver {
     return Sets;
   }
 
+  @Query(() => [Set], { nullable: true })
+  async exerciseSet(
+    @Arg("limit", () => Int) limit: number,
+    @Arg("id", () => Int) id: number
+  ): Promise<Set[] | undefined> {
+    const realLimit = Math.min(50, limit);
+
+    const Sets = await getConnection()
+      .getRepository(Set)
+      .createQueryBuilder("s")
+      .where("s.exerciseId = :id", { id })
+      .orderBy("s.createdAt", "DESC")
+      .take(realLimit)
+      .getMany();
+
+    return Sets;
+  }
+
   @Mutation(() => Set)
   async createSet(@Arg("input") input: SetInput): Promise<Set> {
     return Set.create({ ...input }).save();
