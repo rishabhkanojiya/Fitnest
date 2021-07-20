@@ -24,6 +24,10 @@ let configs = {
       link: "/login",
       title: "Login",
     },
+    register: {
+      link: "/register",
+      title: "Register",
+    },
     logout: {
       link: "/logout",
       title: "Logout",

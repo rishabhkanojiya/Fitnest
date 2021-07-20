@@ -35,8 +35,14 @@ const NavBar = (props: Props) => {
       </Flex>
       <Flex>
         <NextLink href={configs.enumUrl.login.link}>
-          <Link ml={2} mr={2} color="green">
+          <Link ml={2} mr={2}>
             {configs.enumUrl.login.title}
+          </Link>
+        </NextLink>
+
+        <NextLink href={configs.enumUrl.register.link}>
+          <Link ml={2} mr={2}>
+            {configs.enumUrl.register.title}
           </Link>
         </NextLink>
       </Flex>

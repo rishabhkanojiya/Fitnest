@@ -18,3 +18,5 @@ export const trimVal = (
 
   return values;
 };
+
+export const isServer = () => typeof Window === "undefined";
