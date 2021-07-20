@@ -1,13 +1,14 @@
-import { Box } from "@chakra-ui/react";
 import React from "react";
 import Layout from "../components/Layout";
 
-const index = () => {
+interface Props {}
+
+const Exercise = (props: Props) => {
   return (
     <Layout>
-      <b>hello</b>
+      <b>exercise exercise</b>
     </Layout>
   );
 };
 
-export default index;
+export default Exercise;
