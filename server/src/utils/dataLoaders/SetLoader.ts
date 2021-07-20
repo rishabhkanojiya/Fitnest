@@ -1,18 +1,17 @@
 import Dataloader from "dataloader";
 import { getConnection } from "typeorm";
-import { Workout } from "../../entites/WorkOut";
-import { Exercise } from "src/entites/Exercise";
+import { Exercise } from "../../entites/Exercise";
+import { Set } from "../../entites/Set";
 
 const setOfExercise = async (ids: readonly number[]) => {
-  const workouts = await getConnection()
-    .getRepository(Workout)
-    .createQueryBuilder("w")
-    .leftJoinAndSelect("w.workExercise", "exercise")
-    .where("w.id IN (:...ids)", { ids })
+  const exercises = await getConnection()
+    .getRepository(Exercise)
+    .createQueryBuilder("s")
+    .leftJoinAndSelect("s.exerciseSets", "set")
+    .where("s.id IN (:...ids)", { ids })
     .getMany();
 
-  return workouts.map((workout) => workout.workExercise);
+  return exercises.map((exercise) => exercise.exerciseSets);
 };
 
-export const SetLoader = () =>
-  new Dataloader<number, Exercise[]>(setOfExercise);
+export const SetLoader = () => new Dataloader<number, Set[]>(setOfExercise);

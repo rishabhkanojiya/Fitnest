@@ -12,7 +12,6 @@ const workoutOfuser = async (ids: readonly number[]) => {
     .getMany();
 
   return users.map((user) => {
-    console.log(user.workouts);
     return user.workouts;
   });
 };
