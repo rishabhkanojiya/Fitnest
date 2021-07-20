@@ -26,6 +26,15 @@ export class WorkoutResolver {
     return userLoader.load(workout.workoutUserId);
   }
 
+  @FieldResolver(() => [Workout])
+  workExercise(
+    @Root() workout: Workout,
+
+    @Ctx() { exerciseLoader }: MyContext
+  ) {
+    return exerciseLoader.load(workout.id);
+  }
+
   @Query(() => Workout, { nullable: true })
   async workout(
     @Arg("id", () => Int) id: number
@@ -38,15 +47,16 @@ export class WorkoutResolver {
     @Arg("limit", () => Int) limit: number
   ): Promise<Workout[] | undefined> {
     const realLimit = Math.min(50, limit);
+    return Workout.find({ take: realLimit });
+    // relations: ["workExercise"],
+    // const workouts = await getConnection()
+    //   .getRepository(Workout)
+    //   .createQueryBuilder("w")
+    //   .orderBy("w.createdAt", "DESC")
+    //   .take(realLimit)
+    //   .getMany();
 
-    const workouts = await getConnection()
-      .getRepository(Workout)
-      .createQueryBuilder("w")
-      .orderBy("w.createdAt", "DESC")
-      .take(realLimit)
-      .getMany();
-
-    return workouts;
+    // return workouts;
   }
 
   @Mutation(() => WorkOutRespone)
@@ -56,7 +66,7 @@ export class WorkoutResolver {
   ): Promise<WorkOutRespone> {
     const workout = Workout.create({
       ...input,
-      workoutUserId: req.session.userId,
+      workoutUserId: req.session.userId || 1,
     });
 
     try {

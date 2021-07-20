@@ -4,8 +4,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -31,11 +32,17 @@ export class Workout extends BaseEntity {
   @Column()
   workoutUserId: number;
 
+  // @Field()
+  // @Column()
+  // exerciseId: number;
+
   @Field()
   @ManyToOne(() => User, (u) => u.workouts)
   workoutUser: User;
 
-  @OneToMany(() => Exercise, (e) => e.workout)
+  // @Field(() => [Exercise], { nullable: true })
+  @ManyToMany(() => Exercise, (e) => e.workouts)
+  @JoinTable()
   workExercise: Exercise[];
 
   @Field(() => String)

@@ -15,6 +15,7 @@ import { UserResolver } from "./resolvers/UserResolver";
 import { WorkoutResolver } from "./resolvers/WorkoutResolver";
 import { UserLoader } from "./utils/dataLoaders/UserLoader";
 import { WorkoutLoader } from "./utils/dataLoaders/WorkoutLoader";
+import { ExerciseLoader } from "./utils/dataLoaders/ExerciseLoader";
 
 const main = async () => {
   await createConnection(typeOrmCOnfig);
@@ -65,6 +66,7 @@ const main = async () => {
       redis,
       userLoader: UserLoader(),
       workoutLoader: WorkoutLoader(),
+      exerciseLoader: ExerciseLoader(),
     }),
   });
 
