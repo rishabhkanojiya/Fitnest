@@ -4,7 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -27,13 +27,17 @@ export class Exercise extends BaseEntity {
   @Column()
   bodyPart!: string;
 
+  // @Field()
+  // @Column()
+  // workoutId: number;
+
   @Field()
   @Column()
-  workoutId: number;
+  exerciseWorkId: number;
 
   // @Field(() => [Workout], { nullable: true })
-  @ManyToMany(() => Workout, (w) => w.workExercise)
-  workouts: Workout[];
+  @ManyToOne(() => Workout, (w) => w.workExercise)
+  exerciseWork: Workout;
 
   @OneToMany(() => Set, (s) => s.exercise)
   sets: Set[];

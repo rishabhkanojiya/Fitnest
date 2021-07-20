@@ -3,7 +3,7 @@ import { User } from "../../entites/User";
 import { getConnection } from "typeorm";
 import { Workout } from "../../entites/WorkOut";
 
-const tagsOfPosts = async (ids: readonly number[]) => {
+const workoutOfuser = async (ids: readonly number[]) => {
   const users = await getConnection()
     .getRepository(User)
     .createQueryBuilder("u")
@@ -11,8 +11,11 @@ const tagsOfPosts = async (ids: readonly number[]) => {
     .where("u.id IN (:...ids)", { ids })
     .getMany();
 
-  return users.map((user) => user.workouts);
+  return users.map((user) => {
+    console.log(user.workouts);
+    return user.workouts;
+  });
 };
 
 export const WorkoutLoader = () =>
-  new Dataloader<number, Workout[]>(tagsOfPosts);
+  new Dataloader<number, Workout[]>(workoutOfuser);

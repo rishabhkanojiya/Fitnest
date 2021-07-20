@@ -3,7 +3,7 @@ import { Field, InputType } from "type-graphql";
 @InputType()
 export class ExerciseInput {
   @Field()
-  workoutId!: number;
+  exerciseWorkId!: number;
 
   @Field()
   name!: string;

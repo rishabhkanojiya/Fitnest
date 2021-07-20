@@ -39,7 +39,7 @@ export class ExerciseResolver {
     const exercises = await getConnection()
       .getRepository(Exercise)
       .createQueryBuilder("e")
-      .where("e.workoutId = :id", { id })
+      .where("e.exerciseWorkId = :id", { id })
       .orderBy("e.createdAt", "DESC")
       .take(realLimit)
       .getMany();

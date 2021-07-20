@@ -3,7 +3,7 @@ import { getConnection } from "typeorm";
 import { Workout } from "../../entites/WorkOut";
 import { Exercise } from "src/entites/Exercise";
 
-const tagsOfPosts = async (ids: readonly number[]) => {
+const exerciseOfWorkout = async (ids: readonly number[]) => {
   const workouts = await getConnection()
     .getRepository(Workout)
     .createQueryBuilder("w")
@@ -15,4 +15,4 @@ const tagsOfPosts = async (ids: readonly number[]) => {
 };
 
 export const ExerciseLoader = () =>
-  new Dataloader<number, Exercise[]>(tagsOfPosts);
+  new Dataloader<number, Exercise[]>(exerciseOfWorkout);

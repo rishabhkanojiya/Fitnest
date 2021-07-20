@@ -52,7 +52,7 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   userWokouts(@Ctx() { req }: MyContext) {
-    const { userId } = req.session;
+    const { userId = 1 } = req.session;
     if (!userId) {
       return null;
     }
