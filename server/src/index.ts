@@ -16,6 +16,7 @@ import { WorkoutResolver } from "./resolvers/WorkoutResolver";
 import { UserLoader } from "./utils/dataLoaders/UserLoader";
 import { WorkoutLoader } from "./utils/dataLoaders/WorkoutLoader";
 import { ExerciseLoader } from "./utils/dataLoaders/ExerciseLoader";
+import { SetLoader } from "./utils/dataLoaders/SetLoader";
 
 const main = async () => {
   await createConnection(typeOrmCOnfig);
@@ -67,6 +68,7 @@ const main = async () => {
       userLoader: UserLoader(),
       workoutLoader: WorkoutLoader(),
       exerciseLoader: ExerciseLoader(),
+      setLoader: SetLoader(),
     }),
   });
 

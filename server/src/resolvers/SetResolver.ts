@@ -1,7 +1,7 @@
-import { Set } from "../entites/Set";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
-import { SetInput } from "./inputType/SetInput";
 import { getConnection } from "typeorm";
+import { Set } from "../entites/Set";
+import { SetInput } from "./inputType/SetInput";
 
 @Resolver()
 export class SetResolver {

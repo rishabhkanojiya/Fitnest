@@ -1,10 +1,29 @@
-import { Exercise } from "../entites/Exercise";
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
-import { ExerciseInput } from "./inputType/ExerciseInput";
+import { MyContext } from "src/types";
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Int,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 import { getConnection } from "typeorm";
+import { Exercise } from "../entites/Exercise";
+import { ExerciseInput } from "./inputType/ExerciseInput";
 
-@Resolver()
+@Resolver(Exercise)
 export class ExerciseResolver {
+  @FieldResolver(() => [Set])
+  exerciseSets(
+    @Root() exercise: Exercise,
+
+    @Ctx() { setLoader }: MyContext
+  ) {
+    return setLoader.load(exercise.id);
+  }
+
   @Query(() => Exercise, { nullable: true })
   async exercise(
     @Arg("id", () => Int) id: number

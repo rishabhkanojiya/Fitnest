@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Session, SessionData } from "express-session";
 import { Redis } from "ioredis";
 import { ExerciseLoader } from "src/utils/dataLoaders/ExerciseLoader";
+import { SetLoader } from "src/utils/dataLoaders/SetLoader";
 import { UserLoader } from "src/utils/dataLoaders/UserLoader";
 import { WorkoutLoader } from "src/utils/dataLoaders/WorkoutLoader";
 
@@ -14,4 +15,5 @@ export type MyContext = {
   userLoader: ReturnType<typeof UserLoader>;
   workoutLoader: ReturnType<typeof WorkoutLoader>;
   exerciseLoader: ReturnType<typeof ExerciseLoader>;
+  setLoader: ReturnType<typeof SetLoader>;
 };

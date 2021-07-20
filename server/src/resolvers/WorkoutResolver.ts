@@ -14,6 +14,7 @@ import { getConnection } from "typeorm";
 import { WorkOutRespone } from "./ResponseType/WorkoutResponse";
 import { MyContext } from "src/types";
 import { User } from "../entites/User";
+import { Exercise } from "../entites/Exercise";
 
 @Resolver(Workout)
 export class WorkoutResolver {
@@ -26,7 +27,7 @@ export class WorkoutResolver {
     return userLoader.load(workout.workoutUserId);
   }
 
-  @FieldResolver(() => [Workout])
+  @FieldResolver(() => [Exercise])
   workExercise(
     @Root() workout: Workout,
 

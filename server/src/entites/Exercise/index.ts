@@ -39,8 +39,9 @@ export class Exercise extends BaseEntity {
   @ManyToOne(() => Workout, (w) => w.workExercise)
   exerciseWork: Workout;
 
+  @Field(() => [Set], { nullable: true })
   @OneToMany(() => Set, (s) => s.exercise)
-  sets: Set[];
+  exerciseSets: Set[];
 
   @Field(() => String)
   @CreateDateColumn()

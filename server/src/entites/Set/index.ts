@@ -37,7 +37,7 @@ export class Set extends BaseEntity {
   @Column()
   setType!: string;
 
-  @ManyToOne(() => Exercise, (e) => e.sets)
+  @ManyToOne(() => Exercise, (e) => e.exerciseSets)
   exercise: Exercise;
 
   @Field(() => String)
