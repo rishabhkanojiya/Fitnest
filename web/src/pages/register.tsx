@@ -1,9 +1,11 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import router from "next/dist/client/router";
 import React from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
+import NextLink from "next/link";
+import configs from "../constant/configs";
 
 interface Props {}
 
@@ -38,23 +40,41 @@ const Register = (props: Props) => {
               name={"username"}
               label={"Username"}
               placeholder={"Username"}
+              margin={true}
             />
+            margin={true}
             <InputField name={"email"} label={"Email"} placeholder={"email"} />
             <InputField
               name={"password"}
               label={"Password"}
               placeholder={"Password"}
               type="password"
+              margin={true}
             />
-
-            <Button
-              mt={4}
-              colorScheme="teal"
-              isLoading={props.isSubmitting}
-              type="submit"
-            >
-              Submit
-            </Button>
+            <SimpleGrid columns={2} alignItems="center" mt={4}>
+              <Box>
+                <Button
+                  mt={4}
+                  colorScheme="teal"
+                  isLoading={props.isSubmitting}
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Box>
+              <Box textAlign="end">
+                <NextLink href={configs.enumUrl.login.link}>
+                  <Button
+                    mr={4}
+                    colorScheme="teal"
+                    isLoading={props.isSubmitting}
+                    type="submit"
+                  >
+                    {configs.enumUrl.login.title}
+                  </Button>
+                </NextLink>
+              </Box>
+            </SimpleGrid>
           </Form>
         )}
       </Formik>

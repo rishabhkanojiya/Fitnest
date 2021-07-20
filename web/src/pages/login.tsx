@@ -5,6 +5,7 @@ import React from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import NextLink from "next/link";
+import configs from "../constant/configs";
 
 interface Props {}
 
@@ -65,14 +66,14 @@ const Login = (props: Props) => {
                 </Button>
               </Box>
               <Box textAlign="end">
-                <NextLink href="/register">
+                <NextLink href={configs.enumUrl.register.link}>
                   <Button
                     mr={4}
                     colorScheme="teal"
                     isLoading={props.isSubmitting}
                     type="submit"
                   >
-                    Register
+                    {configs.enumUrl.register.title}
                   </Button>
                 </NextLink>
                 <NextLink href="/forgetPass">
