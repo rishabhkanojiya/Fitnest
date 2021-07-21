@@ -6,15 +6,29 @@ import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import NextLink from "next/link";
 import configs from "../constant/configs";
+import { toErrorMap, trimVal } from "../constant/actions";
+import { loginValidator } from "../constant/utils/loginValidator";
+import { userValidator } from "../constant/utils/userValidate";
+import { useLoginMutation } from "../generated/graphql";
+import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
 const Login = (props: Props) => {
+  const [login] = useLoginMutation();
   return (
     <Layout>
       <Formik
         initialValues={{ usernameOrEmail: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
+          const newVal = trimVal<typeof values>({ ...values });
+          const err = userValidator(newVal);
+          if (err) {
+            setErrors(toErrorMap(err));
+          } else {
+            await login({ variables: newVal });
+          }
+
           //   const res = await login({
           //     variables: values,
           //     update: (caches, { data }) => {
@@ -88,4 +102,4 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default withApollo({ ssr: false })(Login);

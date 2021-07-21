@@ -42,7 +42,6 @@ const Register = (props: Props) => {
               placeholder={"Username"}
               margin={true}
             />
-            margin={true}
             <InputField name={"email"} label={"Email"} placeholder={"email"} />
             <InputField
               name={"password"}

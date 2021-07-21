@@ -1,7 +1,10 @@
 import validator from "validator";
 
 export const userValidator = (value) => {
-  if (!validator.isLength(value.username, { min: 4, max: 25 })) {
+  if (
+    value.username &&
+    !validator.isLength(value.username, { min: 4, max: 25 })
+  ) {
     return [
       {
         field: "username",
@@ -10,7 +13,19 @@ export const userValidator = (value) => {
     ];
   }
 
-  if (!validator.isEmail(value.email)) {
+  if (
+    value.usernameOrEmail &&
+    !validator.isLength(value.usernameOrEmail, { min: 4, max: 25 })
+  ) {
+    return [
+      {
+        field: "usernameOrEmail",
+        message: "usernameOrEmail Length Should be between 4 to 25",
+      },
+    ];
+  }
+
+  if (value.email && !validator.isEmail(value.email)) {
     return [
       {
         field: "email",

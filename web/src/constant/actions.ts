@@ -7,9 +7,7 @@ export const toErrorMap = (errors): Record<string, string> => {
   return errMap;
 };
 
-export const trimVal = (
-  values: Record<string, string>
-): Record<string, string> => {
+export function trimVal<T>(values: T): T {
   Object.keys(values).map((key: string) => {
     if (key !== "password") {
       values[key] = values[key].trim().toLocaleLowerCase();
@@ -17,6 +15,6 @@ export const trimVal = (
   });
 
   return values;
-};
+}
 
 export const isServer = () => typeof Window === "undefined";
