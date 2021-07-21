@@ -36,7 +36,6 @@ const SetInput = ({ isSubmitting }: Props) => {
           // colorScheme="teal"
           variant="ghost"
           aria-label="Call Segun"
-          size="lg"
           icon={<CheckIcon />}
           isLoading={isSubmitting}
           type="submit"
