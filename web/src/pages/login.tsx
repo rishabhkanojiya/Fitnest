@@ -1,16 +1,16 @@
-import { Flex, Button, Box, SimpleGrid, Link } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
-import router from "next/dist/client/router";
+import { Box, Button, Link, SimpleGrid } from "@chakra-ui/react";
+import { Form, Formik } from "formik";
+import NextLink from "next/link";
 import React from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
-import NextLink from "next/link";
-import configs from "../constant/configs";
 import { toErrorMap, trimVal } from "../constant/actions";
-import { loginValidator } from "../constant/utils/loginValidator";
+import configs from "../constant/configs";
 import { userValidator } from "../constant/utils/userValidate";
-import { useLoginMutation } from "../generated/graphql";
 import { withApollo } from "../constant/withApollo";
+import { ShowPopupContext } from "../Context";
+import { Consume } from "../Context/Consumer";
+import { useLoginMutation } from "../generated/graphql";
 
 interface Props {}
 
@@ -102,4 +102,6 @@ const Login = (props: Props) => {
   );
 };
 
-export default withApollo({ ssr: false })(Login);
+const LoginConsumer = Consume(Login, [ShowPopupContext]);
+
+export default withApollo({ ssr: false })(LoginConsumer);

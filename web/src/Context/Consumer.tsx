@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import React, { useContext } from "react";
 
 // export const Consume  (
@@ -38,5 +39,5 @@ export function Consume(WrapperComponent, contexts: React.Context<any>[]) {
     return <WrapperComponent ref={ref} {...props} {...values} />;
   });
 
-  return Consumer;
+  return Consumer as NextPage<unknown, unknown>;
 }

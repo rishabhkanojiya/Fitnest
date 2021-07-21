@@ -5,3 +5,6 @@ ErrorContext.displayName = "ErrorData";
 
 export const ShowPopupContext = createContext(null);
 ShowPopupContext.displayName = "ShowPopupData";
+
+export const LoginContext = createContext(null);
+LoginContext.displayName = "LoginData";
