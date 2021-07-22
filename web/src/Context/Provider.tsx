@@ -32,7 +32,6 @@ export const LoginProvider: React.FC = (props) => {
   const [user, setUser] = useState<MeQuery>(null);
 
   function setUserObj<T>(userVal: T, callback) {
-    console.log(userVal);
     setUser(userVal);
 
     if (callback) {

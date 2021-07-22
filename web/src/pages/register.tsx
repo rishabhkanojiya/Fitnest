@@ -7,15 +7,51 @@ import Layout from "../components/Layout";
 import NextLink from "next/link";
 import configs from "../constant/configs";
 import { withApollo } from "../constant/withApollo";
+import { trimVal, toErrorMap } from "../constant/actions";
+import { userValidator } from "../constant/utils/userValidate";
+import {
+  MeDocument,
+  MeQuery,
+  useRegisterMutation,
+  UsernamePassInput,
+} from "../generated/graphql";
 
 interface Props {}
 
 const Register = (props: Props) => {
+  const [register] = useRegisterMutation();
   return (
     <Layout>
       <Formik
         initialValues={{ username: "", password: "", email: "" }}
         onSubmit={async (values, { setErrors }) => {
+          const newVal = trimVal<typeof values>({ ...values });
+          const err = userValidator(newVal);
+          if (err) {
+            setErrors(toErrorMap(err));
+          } else {
+            const regRes = await register({
+              variables: { option: { ...newVal } },
+              update: (caches, { data }) => {
+                caches.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.register.user,
+                  },
+                });
+                // caches.evict({ fieldName: "post:{}" });
+              },
+            });
+            if (regRes.data.register.error) {
+              console.log(regRes.data.register.error);
+            } else {
+              router.push("/");
+            }
+          }
+
+          console.log(newVal);
+
           //   const res = await register({
           //     variables: { options: values },
           //     update: (caches, { data }) => {

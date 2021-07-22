@@ -47,6 +47,7 @@ const Login = ({ LoginData }: Props) => {
               },
             });
             if (user.data.login.error) {
+              console.log(user.data.login.error);
             } else {
               router.push("/");
               // LoginData.setUserObj(user);
