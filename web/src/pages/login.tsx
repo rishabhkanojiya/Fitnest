@@ -6,15 +6,19 @@ import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import { toErrorMap, trimVal } from "../constant/actions";
 import configs from "../constant/configs";
+import { LoginContextType, PopUpContextType } from "../constant/Types/Context";
 import { userValidator } from "../constant/utils/userValidate";
 import { withApollo } from "../constant/withApollo";
-import { ShowPopupContext } from "../Context";
+import { LoginContext, ShowPopupContext } from "../Context";
 import { Consume } from "../Context/Consumer";
 import { useLoginMutation } from "../generated/graphql";
 
-interface Props {}
+interface Props {
+  LoginData: LoginContextType;
+  ShowPopupData: PopUpContextType;
+}
 
-const Login = (props: Props) => {
+const Login = ({ LoginData }: Props) => {
   const [login] = useLoginMutation();
   return (
     <Layout>
@@ -26,7 +30,11 @@ const Login = (props: Props) => {
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            await login({ variables: newVal });
+            const user = await login({ variables: newVal });
+            if (user.data.login.error) {
+            } else {
+              LoginData.setUserObj(user);
+            }
           }
 
           //   const res = await login({
@@ -102,6 +110,6 @@ const Login = (props: Props) => {
   );
 };
 
-const LoginConsumer = Consume(Login, [ShowPopupContext]);
+const LoginConsumer = Consume(Login, [LoginContext, ShowPopupContext]);
 
 export default withApollo({ ssr: false })(LoginConsumer);

@@ -23,6 +23,14 @@
       "problemMatcher": [],
       "label": "npm: dev - server",
       "detail": "concurrently npm:dev:*"
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "web/",
+      "problemMatcher": [],
+      "label": "npm: dev - web",
+      "detail": "next dev -p 3005"
     }
   ]
 }

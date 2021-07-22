@@ -1,4 +1,10 @@
+import { isServer } from "./actions";
+
 let configs = {
+  sDomain: isServer ? undefined : window.location.hostname,
+
+  COOKIE_GM: "qid",
+
   enumUrl: {
     home: {
       link: "/home",

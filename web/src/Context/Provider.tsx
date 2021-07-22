@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { LoginContext, ShowPopupContext } from ".";
+import { LoginResp } from "../constant/Types/Response";
+import { useLoginMutation } from "../generated/graphql";
 
 export const ShowPopupProvider = (props) => {
   let [messageObj, setMessage] = useState({});
@@ -26,10 +28,10 @@ export const ShowPopupProvider = (props) => {
   );
 };
 
-export const LoginProvider = (props) => {
-  const [user, setUser] = useState(null);
+export const LoginProvider: React.FC = (props) => {
+  const [user, setUser] = useState<LoginResp>(null);
 
-  const setUserObj = (userVal, callback) => {
+  const setUserObj = (userVal: LoginResp, callback) => {
     setUser(userVal);
 
     if (callback) {

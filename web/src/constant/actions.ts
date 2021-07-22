@@ -1,3 +1,5 @@
+import configs from "./configs";
+
 export const toErrorMap = (errors): Record<string, string> => {
   const errMap: Record<string, string> = {};
   errors.map(({ field, message }) => {
