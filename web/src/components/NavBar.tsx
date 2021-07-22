@@ -1,12 +1,17 @@
-import { Flex, Link } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Button, Flex, Link } from "@chakra-ui/react";
+import React, { Fragment, useEffect } from "react";
 import NextLink from "next/link";
 import configs from "../constant/configs";
 import { LoginContextType } from "../constant/Types/Context";
 import { Consume } from "../Context/Consumer";
 import { LoginContext } from "../Context";
 import { getLoginCookie } from "../constant/core";
-import { useMeQuery } from "../generated/graphql";
+import {
+  useLoginMutation,
+  useLogOutMutation,
+  useMeQuery,
+} from "../generated/graphql";
+import { useRouter } from "next/dist/client/router";
 
 interface Props {
   LoginData: LoginContextType;
@@ -14,6 +19,8 @@ interface Props {
 }
 
 const NavBar = ({ LoginData }: Props) => {
+  const router = useRouter();
+  const [logout] = useLogOutMutation();
   const { data, loading } = useMeQuery();
 
   useEffect(() => {
@@ -48,17 +55,41 @@ const NavBar = ({ LoginData }: Props) => {
         </NextLink>
       </Flex>
       <Flex>
-        <NextLink href={configs.enumUrl.login.link}>
-          <Link ml={2} mr={2}>
-            {configs.enumUrl.login.title}
-          </Link>
-        </NextLink>
+        {LoginData.data?.me ? (
+          <Fragment>
+            <NextLink href={configs.enumUrl.profile.link}>
+              <Link ml={2} mr={2}>
+                {LoginData.data?.me?.username}
+              </Link>
+            </NextLink>
 
-        <NextLink href={configs.enumUrl.register.link}>
-          <Link ml={2} mr={2}>
-            {configs.enumUrl.register.title}
-          </Link>
-        </NextLink>
+            <Link
+              ml={2}
+              mr={2}
+              onClick={async () => {
+                await logout();
+                LoginData.delUserObj();
+                router.reload();
+              }}
+            >
+              {configs.enumUrl.logout.title}
+            </Link>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <NextLink href={configs.enumUrl.login.link}>
+              <Link ml={2} mr={2}>
+                {configs.enumUrl.login.title}
+              </Link>
+            </NextLink>
+
+            <NextLink href={configs.enumUrl.register.link}>
+              <Link ml={2} mr={2}>
+                {configs.enumUrl.register.title}
+              </Link>
+            </NextLink>
+          </Fragment>
+        )}
       </Flex>
     </Flex>
   );

@@ -12,7 +12,7 @@ import { userValidator } from "../constant/utils/userValidate";
 import { withApollo } from "../constant/withApollo";
 import { LoginContext, ShowPopupContext } from "../Context";
 import { Consume } from "../Context/Consumer";
-import { useLoginMutation } from "../generated/graphql";
+import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
 
 interface Props {
   LoginData: LoginContextType;
@@ -32,7 +32,20 @@ const Login = ({ LoginData }: Props) => {
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            const user = await login({ variables: newVal });
+            const user = await login({
+              variables: newVal,
+
+              update: (caches, { data }) => {
+                caches.writeQuery<MeQuery>({
+                  query: MeDocument,
+                  data: {
+                    __typename: "Query",
+                    me: data?.login.user,
+                  },
+                });
+                caches.evict({ fieldName: "post:{}" });
+              },
+            });
             if (user.data.login.error) {
             } else {
               router.push("/");

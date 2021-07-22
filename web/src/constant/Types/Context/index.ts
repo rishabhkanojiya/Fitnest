@@ -1,9 +1,9 @@
-import { MeQuery } from "../../../generated/graphql";
+import { LoginMutation, MeQuery } from "../../../generated/graphql";
 import { LoginResp } from "../Response";
 
 export interface LoginContextType {
   data: MeQuery;
-  setUserObj: (userVal: MeQuery, callback?: any) => void;
+  setUserObj: <T>(userVal: T, callback?: any) => void;
   delUserObj: () => void;
 }
 

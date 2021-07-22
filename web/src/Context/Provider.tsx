@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoginContext, ShowPopupContext } from ".";
 import { LoginResp } from "../constant/Types/Response";
-import { useLoginMutation } from "../generated/graphql";
+import { MeQuery, useLoginMutation } from "../generated/graphql";
 
 export const ShowPopupProvider = (props) => {
   let [messageObj, setMessage] = useState({});
@@ -29,15 +29,16 @@ export const ShowPopupProvider = (props) => {
 };
 
 export const LoginProvider: React.FC = (props) => {
-  const [user, setUser] = useState<LoginResp>(null);
+  const [user, setUser] = useState<MeQuery>(null);
 
-  const setUserObj = (userVal: LoginResp, callback) => {
+  function setUserObj<T>(userVal: T, callback) {
+    console.log(userVal);
     setUser(userVal);
 
     if (callback) {
       callback();
     }
-  };
+  }
 
   const delUserObj = () => {
     setUser(null);
