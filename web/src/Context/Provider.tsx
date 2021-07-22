@@ -39,11 +39,16 @@ export const LoginProvider: React.FC = (props) => {
     }
   };
 
+  const delUserObj = () => {
+    setUser(null);
+  };
+
   return (
     <LoginContext.Provider
       value={{
         data: user,
         setUserObj,
+        delUserObj,
       }}
     >
       {props.children}

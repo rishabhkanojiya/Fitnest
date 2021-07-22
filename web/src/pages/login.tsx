@@ -1,5 +1,6 @@
 import { Box, Button, Link, SimpleGrid } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/dist/client/router";
 import NextLink from "next/link";
 import React from "react";
 import InputField from "../components/InputField";
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const Login = ({ LoginData }: Props) => {
+  const router = useRouter();
   const [login] = useLoginMutation();
   return (
     <Layout>
@@ -33,7 +35,8 @@ const Login = ({ LoginData }: Props) => {
             const user = await login({ variables: newVal });
             if (user.data.login.error) {
             } else {
-              LoginData.setUserObj(user);
+              router.push("/");
+              // LoginData.setUserObj(user);
             }
           }
 

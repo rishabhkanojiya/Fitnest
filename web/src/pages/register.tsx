@@ -6,6 +6,7 @@ import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import NextLink from "next/link";
 import configs from "../constant/configs";
+import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
@@ -81,4 +82,4 @@ const Register = (props: Props) => {
   );
 };
 
-export default Register;
+export default withApollo({ ssr: false })(Register);

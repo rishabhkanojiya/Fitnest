@@ -1,8 +1,10 @@
+import { MeQuery } from "../../../generated/graphql";
 import { LoginResp } from "../Response";
 
 export interface LoginContextType {
-  data: LoginResp;
-  setUserObj: (userVal: LoginResp, callback?: any) => void;
+  data: MeQuery;
+  setUserObj: (userVal: MeQuery, callback?: any) => void;
+  delUserObj: () => void;
 }
 
 export interface PopUpContextType {

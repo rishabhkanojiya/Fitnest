@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
@@ -67,4 +68,4 @@ const History = (props: Props) => {
   );
 };
 
-export default History;
+export default withApollo({ ssr: false })(History);

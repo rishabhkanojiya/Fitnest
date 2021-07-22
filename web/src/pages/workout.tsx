@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
@@ -66,4 +67,4 @@ const Workout = (props: Props) => {
   );
 };
 
-export default Workout;
+export default withApollo({ ssr: false })(Workout);

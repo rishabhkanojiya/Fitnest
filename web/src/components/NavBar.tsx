@@ -1,11 +1,25 @@
 import { Flex, Link } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import NextLink from "next/link";
 import configs from "../constant/configs";
+import { LoginContextType } from "../constant/Types/Context";
+import { Consume } from "../Context/Consumer";
+import { LoginContext } from "../Context";
+import { getLoginCookie } from "../constant/core";
+import { useMeQuery } from "../generated/graphql";
 
-interface Props {}
+interface Props {
+  LoginData: LoginContextType;
+  // ShowPopupData: PopUpContextType;
+}
 
-const NavBar = (props: Props) => {
+const NavBar = ({ LoginData }: Props) => {
+  const { data, loading } = useMeQuery();
+
+  useEffect(() => {
+    LoginData.setUserObj(data);
+  }, [data]);
+
   return (
     <Flex mb={2} justifyContent="space-between">
       <Flex>
@@ -50,4 +64,4 @@ const NavBar = (props: Props) => {
   );
 };
 
-export default NavBar;
+export default Consume(NavBar, [LoginContext]);

@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
@@ -58,4 +59,4 @@ const index = (props: Props) => {
   );
 };
 
-export default index;
+export default withApollo({ ssr: false })(index);

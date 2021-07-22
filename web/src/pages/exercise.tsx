@@ -21,6 +21,8 @@ import SetInput from "../components/inputs/SetInput";
 import Layout from "../components/Layout";
 import { trimVal, toErrorMap } from "../constant/actions";
 import { userValidator } from "../constant/utils/userValidate";
+import { withApollo } from "../constant/withApollo";
+import { Consume } from "../Context/Consumer";
 
 interface Props {}
 
@@ -138,4 +140,6 @@ const Exercise = (props: Props) => {
   );
 };
 
-export default Exercise;
+// const ExerciseConsumer = Consume(, []);
+
+export default withApollo({ ssr: false })(Exercise);
