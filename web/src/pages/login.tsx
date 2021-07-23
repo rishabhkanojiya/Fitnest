@@ -48,6 +48,7 @@ const Login = ({ LoginData, ShowPopupData }: Props) => {
               },
             });
             if (user.data.login.error) {
+              console.log(user.data.login.error);
               ShowPopupData.setPopupMessageObj(
                 "loginErrors",
                 user.data.login.error[0].errCode

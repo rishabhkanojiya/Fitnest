@@ -5,6 +5,7 @@ export type getVal = (sKey: sKeyType, errorCodeP: string) => string;
 const data = {
   loginErrors: {
     username: "Username Does Not Exist.",
+    password: "Password does not match | Incorrect Password",
     username1: "Username Does Not exist from error.",
   },
 

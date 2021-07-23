@@ -50,10 +50,10 @@ const Register = ({ ShowPopupData }: Props) => {
             if (regRes.data.register.error) {
               console.log(regRes.data.register.error);
 
-              // ShowPopupData.setPopupMessageObj(
-              //   "registerErrors",
-              //   regRes.data.register.error[0].errCode
-              // );
+              ShowPopupData.setPopupMessageObj(
+                "registerErrors",
+                regRes.data.register.error[0].errCode
+              );
             } else {
               router.push("/");
             }
