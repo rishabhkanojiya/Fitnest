@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { LoginContext, ShowPopupContext } from ".";
+import { apiError, sKeyType } from "../constant/errors/errors";
 import { LoginResp } from "../constant/Types/Response";
 import { MeQuery, useLoginMutation } from "../generated/graphql";
 
 export const ShowPopupProvider = (props) => {
   let [messageObj, setMessage] = useState({});
+  let [showPopup, setShowPopup] = useState(false);
 
-  const setPopupMessageObj = (msg, callback) => {
-    setMessage(msg);
+  const setPopupMessageObj = (
+    sKey: sKeyType,
+    errorCodeP: string,
+    callback
+  ): void => {
+    const val = apiError(sKey, errorCodeP);
+    // const val = apiError.getVal(sKey, errorCodeP);
+    setMessage(val);
+    setShowPopup(true);
 
-    if (msg.showMsg == false) {
+    if (showPopup) {
       if (callback) {
         callback();
       }
@@ -20,7 +29,9 @@ export const ShowPopupProvider = (props) => {
     <ShowPopupContext.Provider
       value={{
         data: messageObj,
+        showPopup,
         setPopupMessageObj,
+        setShowPopup,
       }}
     >
       {props.children}

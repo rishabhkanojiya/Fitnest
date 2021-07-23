@@ -1,4 +1,5 @@
 import { LoginMutation, MeQuery } from "../../../generated/graphql";
+import { sKeyType } from "../../errors/errors";
 import { LoginResp } from "../Response";
 
 export interface LoginContextType {
@@ -9,5 +10,7 @@ export interface LoginContextType {
 
 export interface PopUpContextType {
   data: {};
-  setPopupMessageObj: (msg: string, callback: any) => void;
+  setPopupMessageObj: (sKey: sKeyType, errorCodeP: string, callback?) => void;
+  showPopup: Boolean;
+  setShowPopup: (val: Boolean) => void;
 }

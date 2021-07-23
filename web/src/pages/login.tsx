@@ -19,9 +19,10 @@ interface Props {
   ShowPopupData: PopUpContextType;
 }
 
-const Login = ({ LoginData }: Props) => {
+const Login = ({ LoginData, ShowPopupData }: Props) => {
   const router = useRouter();
   const [login] = useLoginMutation();
+
   return (
     <Layout>
       <Formik
@@ -43,11 +44,14 @@ const Login = ({ LoginData }: Props) => {
                     me: data?.login.user,
                   },
                 });
-                caches.evict({ fieldName: "post:{}" });
+                // caches.evict({ fieldName: "post:{}" });
               },
             });
             if (user.data.login.error) {
-              console.log(user.data.login.error);
+              ShowPopupData.setPopupMessageObj(
+                "loginErrors",
+                user.data.login.error[0].errCode
+              );
             } else {
               router.push("/");
               // LoginData.setUserObj(user);
@@ -109,7 +113,7 @@ const Login = ({ LoginData }: Props) => {
                   <Button
                     mr={4}
                     colorScheme="teal"
-                    isLoading={props.isSubmitting}
+                    // isLoading={props.isSubmitting}
                     type="submit"
                   >
                     {configs.enumUrl.register.title}

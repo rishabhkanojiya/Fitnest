@@ -15,10 +15,15 @@ import {
   useRegisterMutation,
   UsernamePassInput,
 } from "../generated/graphql";
+import { Consume } from "../Context/Consumer";
+import { ShowPopupContext } from "../Context";
+import { PopUpContextType } from "../constant/Types/Context";
 
-interface Props {}
+interface Props {
+  ShowPopupData: PopUpContextType;
+}
 
-const Register = (props: Props) => {
+const Register = ({ ShowPopupData }: Props) => {
   const [register] = useRegisterMutation();
   return (
     <Layout>
@@ -40,11 +45,15 @@ const Register = (props: Props) => {
                     me: data?.register.user,
                   },
                 });
-                // caches.evict({ fieldName: "post:{}" });
               },
             });
             if (regRes.data.register.error) {
               console.log(regRes.data.register.error);
+
+              // ShowPopupData.setPopupMessageObj(
+              //   "registerErrors",
+              //   regRes.data.register.error[0].errCode
+              // );
             } else {
               router.push("/");
             }
@@ -103,7 +112,7 @@ const Register = (props: Props) => {
                   <Button
                     mr={4}
                     colorScheme="teal"
-                    isLoading={props.isSubmitting}
+                    // isLoading={props.isSubmitting}
                     type="submit"
                   >
                     {configs.enumUrl.login.title}
@@ -118,4 +127,6 @@ const Register = (props: Props) => {
   );
 };
 
-export default withApollo({ ssr: false })(Register);
+const RegisterConsumer = Consume(Register, [ShowPopupContext]);
+
+export default withApollo({ ssr: false })(RegisterConsumer);
