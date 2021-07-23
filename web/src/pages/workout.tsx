@@ -1,3 +1,4 @@
+import { CheckIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Heading,
   Box,
@@ -9,20 +10,89 @@ import {
   Tbody,
   Td,
   Tfoot,
+  SimpleGrid,
+  Flex,
+  Input,
+  IconButton,
 } from "@chakra-ui/react";
-import React, { Fragment } from "react";
+import { Form, Formik } from "formik";
+import React, { Fragment, useState } from "react";
+import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
 const Workout = (props: Props) => {
+  const [title, setTitle] = useState(null);
+  console.log(title);
   return (
     <Layout>
       <Fragment>
         <Heading mt={20} size={"2xl"}>
           Workout
         </Heading>
+
+        <SimpleGrid columns={3} justifyItems="center" alignItems="center">
+          {title ? (
+            <Fragment>
+              <Heading my={5} size={"md"}>
+                {title}
+              </Heading>
+              <Flex justifySelf="start">
+                <IconButton
+                  onClick={() => {
+                    setTitle(null);
+                  }}
+                  variant="ghost"
+                  aria-label="Call Segun"
+                  icon={<EditIcon />}
+                  // isLoading={}
+                  type="submit"
+                  // form="workout"
+                />
+              </Flex>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Formik
+                initialValues={{ title: "" }}
+                onSubmit={async (values, { setErrors }) => {
+                  setTitle(values.title);
+                }}
+              >
+                {(props) => (
+                  <Fragment>
+                    <Heading my={5} size={"md"}>
+                      Workout Title
+                    </Heading>
+                    <Flex>
+                      <Form id="workout">
+                        <InputField
+                          name={"title"}
+                          // label={"Title"}
+                          // value="adsad"
+                          placeholder={"Title"}
+                        />
+                      </Form>
+                    </Flex>
+
+                    <Flex>
+                      <IconButton
+                        variant="ghost"
+                        aria-label="Call Segun"
+                        icon={<CheckIcon />}
+                        isLoading={props.isSubmitting}
+                        type="submit"
+                        form="workout"
+                      />
+                    </Flex>
+                  </Fragment>
+                )}
+              </Formik>
+            </Fragment>
+          )}
+        </SimpleGrid>
 
         <Box m={5} p={2} borderWidth="1px" borderRadius="10px">
           <Table variant="simple">

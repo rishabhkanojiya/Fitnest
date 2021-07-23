@@ -44,7 +44,6 @@ const Login = ({ LoginData, ShowPopupData }: Props) => {
                     me: data?.login.user,
                   },
                 });
-                // caches.evict({ fieldName: "post:{}" });
               },
             });
             if (user.data.login.error) {
@@ -55,32 +54,8 @@ const Login = ({ LoginData, ShowPopupData }: Props) => {
               );
             } else {
               router.push("/");
-              // LoginData.setUserObj(user);
             }
           }
-
-          //   const res = await login({
-          //     variables: values,
-          //     update: (caches, { data }) => {
-          //       caches.writeQuery<MeQuery>({
-          //         query: MeDocument,
-          //         data: {
-          //           __typename: "Query",
-          //           me: data?.login.user,
-          //         },
-          //       });
-          //       caches.evict({ fieldName: "post:{}" });
-          //     },
-          //   });
-          //   if (res.data?.login.error) {
-          //     setErrors(actions.toErrorMap(res.data.login.error));
-          //   } else if (res.data?.login.user) {
-          //     if (typeof router.query.next === "string") {
-          //       router.push(router.query.next);
-          //     } else {
-          //       router.push("/");
-          //     }
-          //   }
         }}
       >
         {(props) => (
