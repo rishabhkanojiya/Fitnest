@@ -20,6 +20,7 @@ import InputField from "../components/InputField";
 import SetInput from "../components/inputs/SetInput";
 import Layout from "../components/Layout";
 import { trimVal, toErrorMap } from "../constant/actions";
+import { exerciseValidator } from "../constant/utils/exerciseValidator";
 import { userValidator } from "../constant/utils/userValidate";
 import { withApollo } from "../constant/withApollo";
 import { Consume } from "../Context/Consumer";
@@ -91,26 +92,21 @@ const Exercise = (props: Props) => {
 
         <Formik
           initialValues={{
-            set: "",
-            previous: "",
-            weight: "",
-            reps: "",
+            name: "",
+            bodyPart: "",
+            exerciseWorkId: "",
           }}
           onSubmit={async (values, { setErrors }) => {
-            // console.log(values);
-            // console.log(trimVal({ ...values }));
-            addSet([...sets, { ...values, id }]);
-            setId(id + 1);
-            const err = userValidator(values);
+            const trExercise = trimVal<typeof values>({ ...values });
+            // addSet([...sets, { ...values, id }]);
+            // setId(id + 1);
+            const err = exerciseValidator(trExercise);
 
             if (err) {
-              console.log(err);
               setErrors(toErrorMap(err));
-              // } else if (res.data?.register.user) {
-              //   router.push("/");
             } else {
-              addSet([...sets, values]);
-              console.log("call");
+              // addSet([...sets, values]);
+              // console.log("call");
             }
           }}
         >

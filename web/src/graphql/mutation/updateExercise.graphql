@@ -1,0 +1,8 @@
+mutation UpdateExercise($id: Int!, $name: String!, $bodyPart: String!) {
+  updateExercise(id: $id, name: $name, bodyPart: $bodyPart) {
+    id
+    name
+    bodyPart
+    createdAt
+  }
+}

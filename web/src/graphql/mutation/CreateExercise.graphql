@@ -1,0 +1,10 @@
+mutation CreateExercise($input: ExerciseInput!) {
+  createExercise(input: $input) {
+    id
+    name
+    bodyPart
+    exerciseWorkId
+    createdAt
+    updatedAt
+  }
+}

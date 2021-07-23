@@ -1,0 +1,10 @@
+query Exercises($limit: Int!) {
+  exercises(limit: $limit) {
+    id
+    name
+    exerciseWorkId
+    bodyPart
+    createdAt
+    updatedAt
+  }
+}
