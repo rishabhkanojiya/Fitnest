@@ -1,0 +1,7 @@
+query WorkoutExercises($limit: Int!, $id: Int!) {
+  workoutExercises(limit: $limit, id: $id) {
+    id
+    name
+    bodyPart
+  }
+}

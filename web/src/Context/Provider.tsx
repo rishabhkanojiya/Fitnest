@@ -70,6 +70,7 @@ export const LoginProvider: React.FC = (props) => {
 export const NewWorkoutProvider = (props) => {
   let [messageObj, setMessage] = useState({});
   let [showPopup, setShowPopup] = useState(false);
+  let [workid, setWorkid] = useState(null);
 
   const NewWorkoutMessageObj = (
     sKey: sKeyType,
@@ -94,6 +95,7 @@ export const NewWorkoutProvider = (props) => {
         data: messageObj,
         showPopup,
         NewWorkoutMessageObj,
+        setWorkid,
         setShowPopup,
       }}
     >

@@ -13,7 +13,12 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import React, { Fragment, useState } from "react";
-import { ExerciseList, useExercisesJsonQuery } from "../../generated/graphql";
+import {
+  ExerciseList,
+  useCreateExerciseMutation,
+  useDeleteExerciseMutation,
+  useExercisesJsonQuery,
+} from "../../generated/graphql";
 import Layout from "../Layout";
 import NewSet from "./NewSet";
 
@@ -25,6 +30,9 @@ interface Props {
 const NewExercise = ({}: Props) => {
   const [openExer, setOpenExer] = useState(false);
   const [exercise, setExercise] = useState<ExerciseList[]>([]);
+
+  const [createExer] = useCreateExerciseMutation();
+  const [deleteExer] = useDeleteExerciseMutation();
 
   const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
 

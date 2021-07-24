@@ -446,6 +446,20 @@ export type ExercisesQuery = (
   )>> }
 );
 
+export type WorkoutExercisesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  id: Scalars['Int'];
+}>;
+
+
+export type WorkoutExercisesQuery = (
+  { __typename?: 'Query' }
+  & { workoutExercises?: Maybe<Array<(
+    { __typename?: 'Exercise' }
+    & Pick<Exercise, 'id' | 'name' | 'bodyPart'>
+  )>> }
+);
+
 export type ExercisesJsonQueryVariables = Exact<{
   limit: Scalars['Int'];
 }>;
@@ -480,6 +494,45 @@ export type SetsQuery = (
   & { sets?: Maybe<Array<(
     { __typename?: 'Set' }
     & Pick<Set, 'id' | 'exerciseId' | 'setNo' | 'weight'>
+  )>> }
+);
+
+export type ExerciseSetsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  id: Scalars['Int'];
+}>;
+
+
+export type ExerciseSetsQuery = (
+  { __typename?: 'Query' }
+  & { exerciseSet?: Maybe<Array<(
+    { __typename?: 'Set' }
+    & Pick<Set, 'id' | 'exerciseId' | 'setNo' | 'weight'>
+  )>> }
+);
+
+export type UserWorkoutsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  id: Scalars['Int'];
+}>;
+
+
+export type UserWorkoutsQuery = (
+  { __typename?: 'Query' }
+  & { userWorkouts?: Maybe<Array<(
+    { __typename?: 'Workout' }
+    & Pick<Workout, 'id' | 'title' | 'workoutUserId'>
+    & { workoutUser: (
+      { __typename?: 'User' }
+      & Pick<User, 'username'>
+    ), workExercise: Array<(
+      { __typename?: 'Exercise' }
+      & Pick<Exercise, 'id' | 'name'>
+      & { exerciseSets?: Maybe<Array<(
+        { __typename?: 'Set' }
+        & Pick<Set, 'setNo' | 'setType'>
+      )>> }
+    )> }
   )>> }
 );
 
@@ -993,6 +1046,44 @@ export function useExercisesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type ExercisesQueryHookResult = ReturnType<typeof useExercisesQuery>;
 export type ExercisesLazyQueryHookResult = ReturnType<typeof useExercisesLazyQuery>;
 export type ExercisesQueryResult = Apollo.QueryResult<ExercisesQuery, ExercisesQueryVariables>;
+export const WorkoutExercisesDocument = gql`
+    query WorkoutExercises($limit: Int!, $id: Int!) {
+  workoutExercises(limit: $limit, id: $id) {
+    id
+    name
+    bodyPart
+  }
+}
+    `;
+
+/**
+ * __useWorkoutExercisesQuery__
+ *
+ * To run a query within a React component, call `useWorkoutExercisesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWorkoutExercisesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWorkoutExercisesQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useWorkoutExercisesQuery(baseOptions: Apollo.QueryHookOptions<WorkoutExercisesQuery, WorkoutExercisesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WorkoutExercisesQuery, WorkoutExercisesQueryVariables>(WorkoutExercisesDocument, options);
+      }
+export function useWorkoutExercisesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WorkoutExercisesQuery, WorkoutExercisesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WorkoutExercisesQuery, WorkoutExercisesQueryVariables>(WorkoutExercisesDocument, options);
+        }
+export type WorkoutExercisesQueryHookResult = ReturnType<typeof useWorkoutExercisesQuery>;
+export type WorkoutExercisesLazyQueryHookResult = ReturnType<typeof useWorkoutExercisesLazyQuery>;
+export type WorkoutExercisesQueryResult = Apollo.QueryResult<WorkoutExercisesQuery, WorkoutExercisesQueryVariables>;
 export const ExercisesJsonDocument = gql`
     query ExercisesJson($limit: Int!) {
   exercisesJson(limit: $limit) {
@@ -1105,6 +1196,94 @@ export function useSetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SetsQ
 export type SetsQueryHookResult = ReturnType<typeof useSetsQuery>;
 export type SetsLazyQueryHookResult = ReturnType<typeof useSetsLazyQuery>;
 export type SetsQueryResult = Apollo.QueryResult<SetsQuery, SetsQueryVariables>;
+export const ExerciseSetsDocument = gql`
+    query exerciseSets($limit: Int!, $id: Int!) {
+  exerciseSet(limit: $limit, id: $id) {
+    id
+    exerciseId
+    setNo
+    weight
+  }
+}
+    `;
+
+/**
+ * __useExerciseSetsQuery__
+ *
+ * To run a query within a React component, call `useExerciseSetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExerciseSetsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExerciseSetsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useExerciseSetsQuery(baseOptions: Apollo.QueryHookOptions<ExerciseSetsQuery, ExerciseSetsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExerciseSetsQuery, ExerciseSetsQueryVariables>(ExerciseSetsDocument, options);
+      }
+export function useExerciseSetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExerciseSetsQuery, ExerciseSetsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExerciseSetsQuery, ExerciseSetsQueryVariables>(ExerciseSetsDocument, options);
+        }
+export type ExerciseSetsQueryHookResult = ReturnType<typeof useExerciseSetsQuery>;
+export type ExerciseSetsLazyQueryHookResult = ReturnType<typeof useExerciseSetsLazyQuery>;
+export type ExerciseSetsQueryResult = Apollo.QueryResult<ExerciseSetsQuery, ExerciseSetsQueryVariables>;
+export const UserWorkoutsDocument = gql`
+    query UserWorkouts($limit: Int!, $id: Int!) {
+  userWorkouts(limit: $limit, id: $id) {
+    id
+    title
+    workoutUserId
+    workoutUser {
+      username
+    }
+    workExercise {
+      id
+      name
+      exerciseSets {
+        setNo
+        setType
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserWorkoutsQuery__
+ *
+ * To run a query within a React component, call `useUserWorkoutsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserWorkoutsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserWorkoutsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserWorkoutsQuery(baseOptions: Apollo.QueryHookOptions<UserWorkoutsQuery, UserWorkoutsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserWorkoutsQuery, UserWorkoutsQueryVariables>(UserWorkoutsDocument, options);
+      }
+export function useUserWorkoutsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserWorkoutsQuery, UserWorkoutsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserWorkoutsQuery, UserWorkoutsQueryVariables>(UserWorkoutsDocument, options);
+        }
+export type UserWorkoutsQueryHookResult = ReturnType<typeof useUserWorkoutsQuery>;
+export type UserWorkoutsLazyQueryHookResult = ReturnType<typeof useUserWorkoutsLazyQuery>;
+export type UserWorkoutsQueryResult = Apollo.QueryResult<UserWorkoutsQuery, UserWorkoutsQueryVariables>;
 export const WorkoutsDocument = gql`
     query Workouts($limit: Int!) {
   workouts(limit: $limit) {
