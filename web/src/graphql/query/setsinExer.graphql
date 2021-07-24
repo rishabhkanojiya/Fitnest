@@ -4,5 +4,6 @@ query exerciseSets($limit: Int!, $id: Int!) {
     exerciseId
     setNo
     weight
+    reps
   }
 }

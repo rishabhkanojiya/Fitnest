@@ -14,6 +14,11 @@ import React, { Fragment, useState } from "react";
 import { trimVal, toErrorMap } from "../../constant/actions";
 import { exerciseValidator } from "../../constant/utils/exerciseValidator";
 import { setValidator } from "../../constant/utils/setValidator";
+import {
+  useCreateSetsMutation,
+  useDeleteSetMutation,
+  useExerciseSetsQuery,
+} from "../../generated/graphql";
 import SetInput from "../inputs/SetInput";
 
 interface Props {
@@ -21,22 +26,31 @@ interface Props {
 }
 
 const NewSet = ({ exerciseId }: Props) => {
-  const [sets, setSets] = useState([]);
+  // const [sets, setSets] = useState([]);
   const [id, setId] = useState(1);
   // console.log(sets);
-  const addSet = (val) => {
-    setSets(val);
-  };
+  const [createSet] = useCreateSetsMutation();
+  const [deleteSet] = useDeleteSetMutation();
 
-  const removeSet = (index) => {
-    const newSet = sets.filter((a, ind) => a.id !== index);
-    setSets(newSet);
-  };
+  const { data: sets } = useExerciseSetsQuery({
+    variables: { id: exerciseId, limit: 50 },
+  });
+
+  // const addSet = (val) => {
+  //   setSets(val);
+  // };
+
+  // const removeSet = (id) => {
+  //   console.log(id);
+
+  //   // const newSet = sets.filter((a, ind) => a.id !== index);
+  //   // setSets(newSet);
+  // };
 
   const renderList = () => {
-    return sets.map((a, index) => {
+    return sets?.exerciseSet.map((a) => {
       return (
-        <Tr key={index}>
+        <Tr key={a.id}>
           <Td>{a.setNo}</Td>
           <Td isNumeric>{a.weight}</Td>
           <Td isNumeric>{a.reps}</Td>
@@ -46,9 +60,14 @@ const NewSet = ({ exerciseId }: Props) => {
               aria-label="Call Segun"
               icon={<CloseIcon />}
               my={-2}
-              type="submit"
-              form="sets"
-              onClick={() => removeSet(a.id)}
+              onClick={() => {
+                deleteSet({
+                  variables: { id: a.id },
+                  update: (caches) => {
+                    caches.evict({ fieldName: "exerciseSet" });
+                  },
+                });
+              }}
             />
           </Td>
         </Tr>
@@ -62,19 +81,33 @@ const NewSet = ({ exerciseId }: Props) => {
         initialValues={{
           exerciseId,
           setNo: "",
-          previous: "",
           weight: "",
           reps: "",
           setType: "",
         }}
         onSubmit={async (values, { setErrors }) => {
-          console.log(values);
           let trSet = trimVal({ ...values });
           const err = setValidator(trSet);
+          console.log(err);
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            addSet([...sets, values]);
+            const set = await createSet({
+              variables: {
+                input: {
+                  exerciseId,
+                  setNo: parseInt(trSet.setNo),
+                  reps: parseInt(trSet.reps),
+                  weight: parseInt(trSet.weight),
+                  setType: trSet.setType,
+                },
+              },
+
+              update: (caches) => {
+                caches.evict({ fieldName: "exerciseSet" });
+              },
+            });
+            // addSet([...sets, values]);
           }
         }}
       >

@@ -37,7 +37,9 @@ export class Set extends BaseEntity {
   @Column()
   setType!: string;
 
-  @ManyToOne(() => Exercise, (e) => e.exerciseSets)
+  @ManyToOne(() => Exercise, (e) => e.exerciseSets, {
+    onDelete: "CASCADE",
+  })
   exercise: Exercise;
 
   @Field(() => String)

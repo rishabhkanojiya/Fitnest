@@ -61,7 +61,13 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
 
             <IconButton
               onClick={() => {
-                deleteExer({ variables: { id: ex.id } });
+                deleteExer({
+                  variables: { id: ex.id },
+
+                  update: (caches) => {
+                    caches.evict({ fieldName: "workoutExercises" });
+                  },
+                });
                 // const x = exer.filter((e) => e.id !== ex.id);
                 // setExercise(x);
               }}

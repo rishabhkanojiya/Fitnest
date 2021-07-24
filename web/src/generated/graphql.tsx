@@ -486,7 +486,7 @@ export type ExerciseSetsQuery = { __typename?: "Query" } & {
     Array<
       { __typename?: "Set" } & Pick<
         Set,
-        "id" | "exerciseId" | "setNo" | "weight"
+        "id" | "exerciseId" | "setNo" | "weight" | "reps"
       >
     >
   >;
@@ -1465,6 +1465,7 @@ export const ExerciseSetsDocument = gql`
       exerciseId
       setNo
       weight
+      reps
     }
   }
 `;
