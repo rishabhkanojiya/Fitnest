@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import React, { Fragment, useState } from "react";
 import InputField from "../InputField";
 import NewExercise from "./NewExercise";
+import NewSet from "./NewSet";
 import Title from "./title";
 
 interface Props {}
@@ -18,7 +19,8 @@ const NewWorkout = (props: Props) => {
   return (
     <Fragment>
       <Title {...titleProps} />
-      <NewExercise />
+      {/* <NewExercise /> */}
+      <NewSet />
     </Fragment>
   );
 };

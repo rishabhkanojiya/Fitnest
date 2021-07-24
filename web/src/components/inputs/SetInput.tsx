@@ -13,13 +13,14 @@ const SetInput = ({ isSubmitting }: Props) => {
     <Tr>
       <Td>
         <Form id="sets">
-          <InputField name={"set"} placeholder={"Set"} />
+          <InputField name={"setNo"} placeholder={"Set"} />
         </Form>
       </Td>
-      <Td>
-        <Form id="sets">
+      <Td textAlign="center">
+        -
+        {/* <Form id="sets">
           <InputField name={"previous"} placeholder={"Previous"} />
-        </Form>
+        </Form> */}
       </Td>
       <Td>
         <Form id="sets">
