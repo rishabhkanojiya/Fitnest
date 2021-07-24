@@ -56,7 +56,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
           <ModalBody>
             <Fragment>
               <Title />
-              <NewExercise />
+              {NewWorkoutData?.workid ? <NewExercise /> : <Fragment />}
             </Fragment>
           </ModalBody>
 
