@@ -2,6 +2,8 @@ import { EditIcon, CheckIcon } from "@chakra-ui/icons";
 import { SimpleGrid, Heading, Flex, IconButton } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React, { Fragment } from "react";
+import { toErrorMap, trimVal } from "../../constant/actions";
+import { titleValidator } from "../../constant/utils/titleValidate";
 import InputField from "../InputField";
 
 interface Props {
@@ -37,7 +39,13 @@ const Title = ({ title, setTitle }: Props) => {
             <Formik
               initialValues={{ title: "" }}
               onSubmit={async (values, { setErrors }) => {
-                setTitle(values.title);
+                const newVal = trimVal(values);
+                const err = titleValidator(newVal);
+                if (err) {
+                  setErrors(toErrorMap(err));
+                } else {
+                  setTitle(newVal.title);
+                }
               }}
             >
               {(props) => (

@@ -13,6 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Box,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React, { Fragment, useState } from "react";
@@ -30,8 +31,12 @@ interface Props {
 }
 
 const NewWorkout = ({ NewWorkoutData }: Props) => {
+  const [workout, setWorkout] = useState({
+    title: "",
+    exercise: [],
+    set: [],
+  });
   const [title, setTitle] = useState<string>(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const titleProps = {
     title,
@@ -57,13 +62,19 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>New workout</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Fragment>
               <Title {...titleProps} />
+
+              {/* <Box textAlign="center">
+                <Button onClick={() => setOpenExer(true)}>Add Exercise</Button>
+              </Box> */}
               <NewExercise />
-              <NewSet />
+              {/* <Box textAlign="center">
+                <Button onClick={() => setOpenSet(true)}>Add Set</Button>
+              </Box> */}
             </Fragment>
           </ModalBody>
 
@@ -74,6 +85,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               mr={3}
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
+                setWorkout({ exercise: [], title: title, set: [] });
               }}
             >
               Close

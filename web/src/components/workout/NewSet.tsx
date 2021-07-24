@@ -16,9 +16,11 @@ import { exerciseValidator } from "../../constant/utils/exerciseValidator";
 import { setValidator } from "../../constant/utils/setValidator";
 import SetInput from "../inputs/SetInput";
 
-interface Props {}
+interface Props {
+  exerciseId: number;
+}
 
-const NewSet = (props: Props) => {
+const NewSet = ({ exerciseId }: Props) => {
   const [sets, setSets] = useState([]);
   const [id, setId] = useState(1);
   console.log(sets);
@@ -58,7 +60,7 @@ const NewSet = (props: Props) => {
     <Fragment>
       <Formik
         initialValues={{
-          exerciseId: "",
+          exerciseId: 0,
           setNo: "",
           previous: "",
           weight: "",
@@ -66,20 +68,21 @@ const NewSet = (props: Props) => {
           setType: "",
         }}
         onSubmit={async (values, { setErrors }) => {
-          const trSet = trimVal<typeof values>({ ...values });
+          let trSet = trimVal({ ...values, exerciseId });
           const err = setValidator(trSet);
-
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            addSet([...sets, values]);
+            console.log(trSet);
+
+            // addSet([...sets, values]);
           }
         }}
       >
         {(props) => (
           <Fragment>
             <Table variant="simple">
-              <TableCaption placement="top">Name</TableCaption>
+              {/* <TableCaption placement="top">Name</TableCaption> */}
               <Thead>
                 <Tr>
                   <Th>Set</Th>

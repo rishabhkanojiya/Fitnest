@@ -11,7 +11,7 @@ export const toErrorMap = (errors): Record<string, string> => {
 
 export function trimVal<T>(values: T): T {
   Object.keys(values).map((key: string) => {
-    if (key !== "password") {
+    if (key !== "password" && typeof values[key] !== "number") {
       values[key] = values[key].trim().toLocaleLowerCase();
     }
   });
