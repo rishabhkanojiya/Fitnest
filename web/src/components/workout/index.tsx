@@ -40,22 +40,8 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
     set: [],
   });
 
-  // const titleProps = {
-  //   title,
-  //   setTitle,
-  // };
-
-  // function BasicUsage() {
-  //   return (
-  //     <>
-  //       {/* <Button onClick={onOpen}>Open Modal</Button> */}
-
-  //     </>
-  //   )
-  // }
   return (
     <Fragment>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
       <Modal
         size="3xl"
         isOpen={NewWorkoutData.showPopup}
@@ -70,14 +56,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
           <ModalBody>
             <Fragment>
               <Title />
-
-              {/* <Box textAlign="center">
-                <Button onClick={() => setOpenExer(true)}>Add Exercise</Button>
-              </Box> */}
               <NewExercise />
-              {/* <Box textAlign="center">
-                <Button onClick={() => setOpenSet(true)}>Add Set</Button>
-              </Box> */}
             </Fragment>
           </ModalBody>
 
@@ -92,16 +71,6 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
             >
               Submit
             </Button>
-            {/* <Button
-              variant="ghost"
-              mr={3}
-              onClick={() => {
-                NewWorkoutData.setShowPopup(false);
-                setWorkout({ exercise: [], title: title, set: [], user: 0 });
-              }}
-            >
-              Close
-            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
