@@ -14,10 +14,12 @@ import {
 } from "@chakra-ui/react";
 import React, { Fragment, useState } from "react";
 import {
+  ExerciseFragFragment,
   ExerciseList,
   useCreateExerciseMutation,
   useDeleteExerciseMutation,
   useExercisesJsonQuery,
+  useWorkoutExercisesQuery,
 } from "../../generated/graphql";
 import Layout from "../Layout";
 import NewSet from "./NewSet";
@@ -29,14 +31,20 @@ interface Props {
 
 const NewExercise = ({}: Props) => {
   const [openExer, setOpenExer] = useState(false);
-  const [exercise, setExercise] = useState<ExerciseList[]>([]);
+  // const [exercise, setExercise] = useState<ExerciseList[]>([]);
 
   const [createExer] = useCreateExerciseMutation();
   const [deleteExer] = useDeleteExerciseMutation();
 
+  const {
+    data: { workoutExercises: exercise },
+    loading,
+  } = useWorkoutExercisesQuery({
+    variables: { limit: 50, id: 20 },
+  });
   const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
 
-  const renderUserExe = (exer: ExerciseList[]) => {
+  const renderUserExe = (exer: ExerciseFragFragment[]) => {
     return exer.map((ex) => {
       return (
         <Fragment key={ex.id}>
@@ -47,8 +55,9 @@ const NewExercise = ({}: Props) => {
 
             <IconButton
               onClick={() => {
-                const x = exer.filter((e) => e.id !== ex.id);
-                setExercise(x);
+                deleteExer({ variables: { id: ex.id } });
+                // const x = exer.filter((e) => e.id !== ex.id);
+                // setExercise(x);
               }}
               // colorScheme="teal"
               variant="ghost"
@@ -69,7 +78,16 @@ const NewExercise = ({}: Props) => {
         <Tr
           key={ex.id}
           onClick={() => {
-            setExercise([...exercise, ex]);
+            // setExercise([...exercise, ex]);
+            createExer({
+              variables: {
+                input: {
+                  name: ex.name,
+                  bodyPart: ex.bodyPart,
+                  exerciseWorkId: 20,
+                },
+              },
+            });
             setOpenExer(false);
           }}
         >
