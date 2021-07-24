@@ -11,6 +11,8 @@ import {
 } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Exercise } from "../entites/Exercise";
+import { ExerciseList } from "../entites/Exercise/ExerciseList";
+import elist from "../feed/exercies.json";
 import { ExerciseInput } from "./inputType/ExerciseInput";
 
 @Resolver(Exercise)
@@ -45,6 +47,19 @@ export class ExerciseResolver {
       .getMany();
 
     return Exercises;
+  }
+
+  @Query(() => [ExerciseList], { nullable: true })
+  async exercisesJson(
+    @Arg("limit", () => Int) limit: number
+  ): Promise<ExerciseList[] | undefined> {
+    let exercisesListObj: ExerciseList[] = JSON.parse(
+      JSON.stringify(elist["exercisesList"])
+    );
+    // return exercisesList.slice(0, limit);
+
+    // console.log("object");
+    return exercisesListObj.slice(0, limit);
   }
 
   @Query(() => [Exercise], { nullable: true })
