@@ -36,8 +36,6 @@ interface Props {
 
 const NewExercise = ({ NewWorkoutData }: Props) => {
   const [openExer, setOpenExer] = useState(false);
-  // const [exercise, setExercise] = useState<ExerciseFragFragment[]>([]);
-  const [fetch, setFetch] = useState(false);
 
   const [createExer] = useCreateExerciseMutation();
   const [deleteExer] = useDeleteExerciseMutation();
@@ -48,7 +46,31 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
     variables: { limit: 50, id: NewWorkoutData.workid },
   });
 
-  // setExercise(exerciseL?.workoutExercises ? exerciseL?.workoutExercises : []);
+  const deleteExerFunc = (id) => {
+    deleteExer({
+      variables: { id },
+      update: (caches) => {
+        caches.evict({ fieldName: "workoutExercises" });
+      },
+    });
+  };
+
+  const addExer = (ex) => {
+    const exer = createExer({
+      variables: {
+        input: {
+          name: ex.name,
+          bodyPart: ex.bodyPart,
+          exerciseWorkId: NewWorkoutData.workid,
+        },
+      },
+      update: (caches) => {
+        caches.evict({ fieldName: "workoutExercises" });
+      },
+    });
+    // setExercise([...exercise, exer.data.createExercise]);
+    setOpenExer(false);
+  };
 
   const renderUserExe = (exer: ExerciseFragFragment[]) => {
     return exer.map((ex) => {
@@ -61,15 +83,7 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
 
             <IconButton
               onClick={() => {
-                deleteExer({
-                  variables: { id: ex.id },
-
-                  update: (caches) => {
-                    caches.evict({ fieldName: "workoutExercises" });
-                  },
-                });
-                // const x = exer.filter((e) => e.id !== ex.id);
-                // setExercise(x);
+                deleteExerFunc(ex.id);
               }}
               // colorScheme="teal"
               variant="ghost"
@@ -90,22 +104,7 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
         <Tr
           key={ex.id}
           onClick={() => {
-            // setExercise([...exercise, ex]);
-            const exer = createExer({
-              variables: {
-                input: {
-                  name: ex.name,
-                  bodyPart: ex.bodyPart,
-                  exerciseWorkId: NewWorkoutData.workid,
-                },
-              },
-              update: (caches) => {
-                caches.evict({ fieldName: "workoutExercises" });
-              },
-            });
-            // setExercise([...exercise, exer.data.createExercise]);
-            setFetch(true);
-            setOpenExer(false);
+            addExer(ex);
           }}
         >
           <Td>{ex.id + 1}</Td>

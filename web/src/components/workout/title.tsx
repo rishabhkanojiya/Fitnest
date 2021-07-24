@@ -23,7 +23,6 @@ interface Props {
 const Title = ({ NewWorkoutData }: Props) => {
   const [title, setTitle] = useState<string>(null);
   const [edit, setEdit] = useState(false);
-  const [work, setWork] = useState(null);
   const [workid, setWorkid] = useState(null);
   const [createWork] = useCreateWorkoutMutation();
   const [updateWork] = useUpdateWorkoutMutation();
@@ -58,16 +57,13 @@ const Title = ({ NewWorkoutData }: Props) => {
             <Flex justifySelf="start">
               <IconButton
                 onClick={() => {
-                  // setTitle(null);
                   setEdit(true);
                   setTitle(null);
                 }}
                 variant="ghost"
                 aria-label="Call Segun"
                 icon={<EditIcon />}
-                // isLoading={}
                 type="submit"
-                // form="workout"
               />
             </Flex>
           </Fragment>
@@ -82,8 +78,6 @@ const Title = ({ NewWorkoutData }: Props) => {
                   setErrors(toErrorMap(err));
                 } else {
                   setTitle(newVal.title);
-
-                  // setTitle(work.data.createWorkout.workout.title);
                 }
               }}
             >
@@ -94,12 +88,7 @@ const Title = ({ NewWorkoutData }: Props) => {
                   </Heading>
                   <Flex>
                     <Form id="workout">
-                      <InputField
-                        name={"title"}
-                        // label={"Title"}
-                        // value="adsad"
-                        placeholder={"Title"}
-                      />
+                      <InputField name={"title"} placeholder={"Title"} />
                     </Form>
                   </Flex>
 

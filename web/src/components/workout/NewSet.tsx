@@ -26,9 +26,6 @@ interface Props {
 }
 
 const NewSet = ({ exerciseId }: Props) => {
-  // const [sets, setSets] = useState([]);
-  const [id, setId] = useState(1);
-  // console.log(sets);
   const [createSet] = useCreateSetsMutation();
   const [deleteSet] = useDeleteSetMutation();
 
@@ -36,16 +33,32 @@ const NewSet = ({ exerciseId }: Props) => {
     variables: { id: exerciseId, limit: 50 },
   });
 
-  // const addSet = (val) => {
-  //   setSets(val);
-  // };
+  const removeSet = (id) => {
+    deleteSet({
+      variables: { id },
+      update: (caches) => {
+        caches.evict({ fieldName: "exerciseSet" });
+      },
+    });
+  };
 
-  // const removeSet = (id) => {
-  //   console.log(id);
+  const addSet = async (trSet) => {
+    await createSet({
+      variables: {
+        input: {
+          exerciseId,
+          setNo: parseInt(trSet.setNo),
+          reps: parseInt(trSet.reps),
+          weight: parseInt(trSet.weight),
+          setType: trSet.setType,
+        },
+      },
 
-  //   // const newSet = sets.filter((a, ind) => a.id !== index);
-  //   // setSets(newSet);
-  // };
+      update: (caches) => {
+        caches.evict({ fieldName: "exerciseSet" });
+      },
+    });
+  };
 
   const renderList = () => {
     return sets?.exerciseSet.map((a) => {
@@ -60,14 +73,7 @@ const NewSet = ({ exerciseId }: Props) => {
               aria-label="Call Segun"
               icon={<CloseIcon />}
               my={-2}
-              onClick={() => {
-                deleteSet({
-                  variables: { id: a.id },
-                  update: (caches) => {
-                    caches.evict({ fieldName: "exerciseSet" });
-                  },
-                });
-              }}
+              onClick={() => removeSet(a.id)}
             />
           </Td>
         </Tr>
@@ -92,22 +98,8 @@ const NewSet = ({ exerciseId }: Props) => {
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            const set = await createSet({
-              variables: {
-                input: {
-                  exerciseId,
-                  setNo: parseInt(trSet.setNo),
-                  reps: parseInt(trSet.reps),
-                  weight: parseInt(trSet.weight),
-                  setType: trSet.setType,
-                },
-              },
-
-              update: (caches) => {
-                caches.evict({ fieldName: "exerciseSet" });
-              },
-            });
             // addSet([...sets, values]);
+            addSet(trSet);
           }
         }}
       >
