@@ -52,9 +52,9 @@ export class SetResolver {
   @Mutation(() => Set)
   async updateSet(
     @Arg("id", () => Int) id: number,
-    @Arg("setNo") setNo: number,
-    @Arg("weight") weight: number,
-    @Arg("reps") reps: number,
+    @Arg("setNo", () => Int) setNo: number,
+    @Arg("weight", () => Int) weight: number,
+    @Arg("reps", () => Int) reps: number,
     @Arg("setType") setType: string
   ): Promise<Set> {
     const result = await getConnection()

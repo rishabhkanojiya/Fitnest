@@ -252,6 +252,22 @@
             "deprecationReason": null
           },
           {
+            "name": "bodyPart",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "video",
             "description": null,
             "args": [],
@@ -513,7 +529,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -529,7 +545,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "Int",
                     "ofType": null
                   }
                 },
@@ -545,7 +561,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "Int",
                     "ofType": null
                   }
                 },

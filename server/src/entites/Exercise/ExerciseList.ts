@@ -14,5 +14,9 @@ export class ExerciseList {
 
   @Field()
   @Column()
+  bodyPart!: string;
+
+  @Field()
+  @Column()
   video!: string;
 }

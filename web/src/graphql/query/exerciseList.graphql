@@ -2,6 +2,7 @@ query ExercisesJson($limit: Int!) {
   exercisesJson(limit: $limit) {
     id
     name
+    bodyPart
     video
   }
 }

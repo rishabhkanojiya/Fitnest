@@ -58,7 +58,6 @@ const NewSet = ({ exerciseId }: Props) => {
 
   return (
     <Fragment>
-      {console.log(exerciseId)}
       <Formik
         initialValues={{
           exerciseId,

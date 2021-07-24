@@ -1,0 +1,8 @@
+query Sets($limit: Int!) {
+  sets(limit: $limit) {
+    id
+    exerciseId
+    setNo
+    weight
+  }
+}

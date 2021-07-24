@@ -1,0 +1,13 @@
+mutation UpdateWorkout($id: Int!, $title: String!) {
+  updateWorkout(id: $id, title: $title) {
+    error {
+      errCode
+      message
+    }
+    workout {
+      id
+      title
+      workoutUserId
+    }
+  }
+}

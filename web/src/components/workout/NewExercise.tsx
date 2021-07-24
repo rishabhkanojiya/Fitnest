@@ -33,9 +33,10 @@ const NewExercise = ({}: Props) => {
       return (
         <Fragment key={ex.id}>
           <SimpleGrid columns={2}>
-            <Heading mt={5} size={"md"}>
+            <Heading mt={5} size={"md"} textAlign="center">
               {ex.name}
             </Heading>
+
             <IconButton
               onClick={() => {
                 const x = exer.filter((e) => e.id !== ex.id);
@@ -66,6 +67,7 @@ const NewExercise = ({}: Props) => {
         >
           <Td>{ex.id + 1}</Td>
           <Td>{ex.name}</Td>
+          <Td>{ex.bodyPart}</Td>
         </Tr>
       );
     });
@@ -88,6 +90,7 @@ const NewExercise = ({}: Props) => {
             <Tr>
               <Th>Id</Th>
               <Th>Name</Th>
+              <Th>BodyPart</Th>
               {/* <Th isNumeric>multiply by</Th> */}
             </Tr>
           </Thead>

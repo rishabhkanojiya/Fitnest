@@ -1,0 +1,13 @@
+query Workouts($limit: Int!) {
+  workouts(limit: $limit) {
+    id
+    title
+    workoutUserId
+    workoutUser {
+      username
+    }
+    workExercise {
+      name
+    }
+  }
+}

@@ -17,9 +17,12 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React, { Fragment, useState } from "react";
-import { NewWorkoutContextType } from "../../constant/Types/Context";
+import {
+  LoginContextType,
+  NewWorkoutContextType,
+} from "../../constant/Types/Context";
 import { withApollo } from "../../constant/withApollo";
-import { NewWorkoutContext } from "../../Context";
+import { LoginContext, NewWorkoutContext } from "../../Context";
 import { Consume } from "../../Context/Consumer";
 import InputField from "../InputField";
 import NewExercise from "./NewExercise";
@@ -55,6 +58,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
     <Fragment>
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
       <Modal
+        size="3xl"
         isOpen={NewWorkoutData.showPopup}
         onClose={() => {
           NewWorkoutData.setShowPopup(false);
@@ -80,16 +84,25 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
 
           <ModalFooter>
             <Button
-              variant="ghost"
-              colorScheme="blue"
               mr={3}
+              variant="ghost"
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
                 setWorkout({ exercise: [], title: title, set: [] });
               }}
             >
-              Close
+              Submit
             </Button>
+            {/* <Button
+              variant="ghost"
+              mr={3}
+              onClick={() => {
+                NewWorkoutData.setShowPopup(false);
+                setWorkout({ exercise: [], title: title, set: [], user: 0 });
+              }}
+            >
+              Close
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -1,0 +1,21 @@
+mutation UpdateSets(
+  $id: Int!
+  $setNo: Int!
+  $weight: Int!
+  $reps: Int!
+  $setType: String!
+) {
+  updateSet(
+    id: $id
+    setNo: $setNo
+    weight: $weight
+    reps: $reps
+    setType: $setType
+  ) {
+    id
+    setNo
+    weight
+    reps
+    setType
+  }
+}

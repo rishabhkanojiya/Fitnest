@@ -1,0 +1,13 @@
+mutation CreateWorkout($input: WorkoutInput!) {
+  createWorkout(input: $input) {
+    error {
+      errCode
+      message
+    }
+    workout {
+      id
+      title
+      workoutUserId
+    }
+  }
+}

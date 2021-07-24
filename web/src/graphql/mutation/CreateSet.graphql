@@ -1,0 +1,9 @@
+mutation CreateSets($input: SetInput!) {
+  createSet(input: $input) {
+    id
+    exerciseId
+    setNo
+    weight
+    reps
+  }
+}
