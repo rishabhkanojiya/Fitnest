@@ -17,7 +17,9 @@ export interface PopUpContextType {
 
 export interface NewWorkoutContextType {
   data: {};
+  workid: number;
   NewWorkoutMessageObj: (sKey: sKeyType, errorCodeP: string, callback?) => void;
   showPopup: boolean;
+  setWorkid: (id: number) => void;
   setShowPopup: (val: Boolean) => void;
 }

@@ -12,7 +12,10 @@ import {
   SimpleGrid,
   IconButton,
 } from "@chakra-ui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { NewWorkoutContextType } from "../../constant/Types/Context";
+import { NewWorkoutContext } from "../../Context";
+import { Consume } from "../../Context/Consumer";
 import {
   ExerciseFragFragment,
   ExerciseList,
@@ -23,26 +26,29 @@ import {
 } from "../../generated/graphql";
 import Layout from "../Layout";
 import NewSet from "./NewSet";
-
+import { memoize } from "lodash";
 interface Props {
   // setExerciseCb: (ex: ExerciseList) => void;
   // setOpenExer: (val: boolean) => void;
+
+  NewWorkoutData: NewWorkoutContextType;
 }
 
-const NewExercise = ({}: Props) => {
+const NewExercise = ({ NewWorkoutData }: Props) => {
   const [openExer, setOpenExer] = useState(false);
-  // const [exercise, setExercise] = useState<ExerciseList[]>([]);
+  // const [exercise, setExercise] = useState<ExerciseFragFragment[]>([]);
+  const [fetch, setFetch] = useState(false);
 
   const [createExer] = useCreateExerciseMutation();
   const [deleteExer] = useDeleteExerciseMutation();
 
-  const {
-    data: { workoutExercises: exercise },
-    loading,
-  } = useWorkoutExercisesQuery({
-    variables: { limit: 50, id: 20 },
-  });
   const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
+
+  const { data: exercise, loading } = useWorkoutExercisesQuery({
+    variables: { limit: 50, id: NewWorkoutData.workid },
+  });
+
+  // setExercise(exerciseL?.workoutExercises ? exerciseL?.workoutExercises : []);
 
   const renderUserExe = (exer: ExerciseFragFragment[]) => {
     return exer.map((ex) => {
@@ -79,15 +85,20 @@ const NewExercise = ({}: Props) => {
           key={ex.id}
           onClick={() => {
             // setExercise([...exercise, ex]);
-            createExer({
+            const exer = createExer({
               variables: {
                 input: {
                   name: ex.name,
                   bodyPart: ex.bodyPart,
-                  exerciseWorkId: 20,
+                  exerciseWorkId: NewWorkoutData.workid,
                 },
               },
+              update: (caches) => {
+                caches.evict({ fieldName: "workoutExercises" });
+              },
             });
+            // setExercise([...exercise, exer.data.createExercise]);
+            setFetch(true);
             setOpenExer(false);
           }}
         >
@@ -104,7 +115,11 @@ const NewExercise = ({}: Props) => {
         Exercise
       </Heading>
 
-      {exercise.length ? renderUserExe(exercise) : <Fragment />}
+      {exercise?.workoutExercises?.length ? (
+        renderUserExe(exercise?.workoutExercises)
+      ) : (
+        <Fragment />
+      )}
       {!openExer ? (
         <Box textAlign="center">
           <Button onClick={() => setOpenExer(true)}>Add Exercise</Button>
@@ -128,4 +143,4 @@ const NewExercise = ({}: Props) => {
   );
 };
 
-export default NewExercise;
+export default Consume(NewExercise, [NewWorkoutContext]);

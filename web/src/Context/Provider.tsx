@@ -93,9 +93,10 @@ export const NewWorkoutProvider = (props) => {
     <NewWorkoutContext.Provider
       value={{
         data: messageObj,
+        workid,
         showPopup,
-        NewWorkoutMessageObj,
         setWorkid,
+        NewWorkoutMessageObj,
         setShowPopup,
       }}
     >

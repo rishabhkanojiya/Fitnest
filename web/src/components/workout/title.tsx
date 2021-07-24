@@ -3,19 +3,24 @@ import { SimpleGrid, Heading, Flex, IconButton } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React, { Fragment, useEffect, useState } from "react";
 import { toErrorMap, trimVal } from "../../constant/actions";
+import { NewWorkoutContextType } from "../../constant/Types/Context";
 import { titleValidator } from "../../constant/utils/titleValidate";
+import { NewWorkoutContext } from "../../Context";
+import { Consume } from "../../Context/Consumer";
 import {
   useCreateWorkoutMutation,
   useUpdateWorkoutMutation,
+  useWorkoutExercisesQuery,
 } from "../../generated/graphql";
 import InputField from "../InputField";
 
 interface Props {
+  NewWorkoutData: NewWorkoutContextType;
   // title: string;
   // setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Title = ({}: Props) => {
+const Title = ({ NewWorkoutData }: Props) => {
   const [title, setTitle] = useState<string>(null);
   const [edit, setEdit] = useState(false);
   const [work, setWork] = useState(null);
@@ -23,6 +28,7 @@ const Title = ({}: Props) => {
   const [createWork] = useCreateWorkoutMutation();
   const [updateWork] = useUpdateWorkoutMutation();
   // console.log(workid);
+
   useEffect(() => {
     if (title) {
       if (edit) {
@@ -32,7 +38,11 @@ const Title = ({}: Props) => {
       } else {
         createWork({
           variables: { input: { title: title } },
-        }).then((res) => setWorkid(res.data.createWorkout.workout.id));
+        }).then((res) => {
+          NewWorkoutData.setWorkid(res.data.createWorkout.workout.id);
+
+          setWorkid(res.data.createWorkout.workout.id);
+        });
       }
     }
   }, [title, edit]);
@@ -113,4 +123,4 @@ const Title = ({}: Props) => {
   );
 };
 
-export default Title;
+export default Consume(Title, [NewWorkoutContext]);
