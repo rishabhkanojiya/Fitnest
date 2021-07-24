@@ -12,6 +12,7 @@ query UserWorkouts($limit: Int!, $id: Int!) {
       name
 
       exerciseSets {
+        id
         setNo
         setType
         weight

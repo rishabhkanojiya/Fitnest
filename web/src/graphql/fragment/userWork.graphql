@@ -11,6 +11,7 @@ fragment userWork on Workout {
     name
 
     exerciseSets {
+      id
       setNo
       setType
       weight

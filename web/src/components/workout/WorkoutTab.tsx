@@ -13,9 +13,12 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React, { Fragment } from "react";
-import { LoginContextType } from "../../constant/Types/Context";
-import { LoginContext } from "../../Context";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import {
+  LoginContextType,
+  NewWorkoutContextType,
+} from "../../constant/Types/Context";
+import { LoginContext, NewWorkoutContext } from "../../Context";
 import { Consume } from "../../Context/Consumer";
 import {
   UserWorkFragment,
@@ -24,12 +27,14 @@ import {
 import TableSkel from "../Skeleton/table";
 import Title from "./title";
 import NewExercise from "./NewExercise";
+// import { usePrevious } from "../../constant/utils/prevVal";
 
 interface Props {
   LoginData: LoginContextType;
+  NewWorkoutData: NewWorkoutContextType;
 }
 
-const WorkoutTab = ({ LoginData }: Props) => {
+const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
   let data, loading;
 
   if (LoginData?.data?.me?.id) {
@@ -41,10 +46,25 @@ const WorkoutTab = ({ LoginData }: Props) => {
     loading = userWOrk.loading;
   }
 
+  NewWorkoutData.setUserWOrk(data);
+
+  // function usePrevious(value) {
+  //   const ref = useRef();
+  //   useEffect(() => {
+  //     ref.current = value;
+  //   });
+  //   return ref.current;
+  // }
+
+  // const prevData = usePrevious(usePrevious);
+
+  // if (NewWorkoutData.data !== data) {
+  // }
+
   const renderExer = (workExercise) => {
     return workExercise.map((a) => {
       return (
-        <Fragment>
+        <Fragment key={a.id}>
           <Divider />
           <Heading size="md" m={2}>
             {a.name}
@@ -61,7 +81,7 @@ const WorkoutTab = ({ LoginData }: Props) => {
             <Tbody>
               {a.exerciseSets.map((s) => {
                 return (
-                  <Tr>
+                  <Tr key={s.id}>
                     <Td>{s.setNo}</Td>
                     <Td isNumeric>{s.weight}</Td>
                     <Td isNumeric>{s.reps}</Td>
@@ -111,4 +131,4 @@ const WorkoutTab = ({ LoginData }: Props) => {
   );
 };
 
-export default Consume(WorkoutTab, [LoginContext]);
+export default Consume(WorkoutTab, [LoginContext, NewWorkoutContext]);

@@ -69,6 +69,7 @@ export const LoginProvider: React.FC = (props) => {
 
 export const NewWorkoutProvider = (props) => {
   let [messageObj, setMessage] = useState({});
+  const [userWOrk, setUserWOrk] = useState(null);
   let [showPopup, setShowPopup] = useState(false);
   let [workid, setWorkid] = useState(null);
 
@@ -98,6 +99,8 @@ export const NewWorkoutProvider = (props) => {
         setWorkid,
         NewWorkoutMessageObj,
         setShowPopup,
+        userWOrk,
+        setUserWOrk,
       }}
     >
       {props.children}

@@ -275,7 +275,7 @@ export type UserWorkFragment = (
     & Pick<Exercise, 'id' | 'name'>
     & { exerciseSets?: Maybe<Array<(
       { __typename?: 'Set' }
-      & Pick<Set, 'setNo' | 'setType' | 'weight' | 'reps'>
+      & Pick<Set, 'id' | 'setNo' | 'setType' | 'weight' | 'reps'>
     )>> }
   )> }
 );
@@ -551,7 +551,7 @@ export type UserWorkoutsQuery = (
       & Pick<Exercise, 'id' | 'name'>
       & { exerciseSets?: Maybe<Array<(
         { __typename?: 'Set' }
-        & Pick<Set, 'setNo' | 'setType' | 'weight' | 'reps'>
+        & Pick<Set, 'id' | 'setNo' | 'setType' | 'weight' | 'reps'>
       )>> }
     )> }
   )>> }
@@ -596,6 +596,7 @@ export const UserWorkFragmentDoc = gql`
     id
     name
     exerciseSets {
+      id
       setNo
       setType
       weight
@@ -1296,6 +1297,7 @@ export const UserWorkoutsDocument = gql`
       id
       name
       exerciseSets {
+        id
         setNo
         setType
         weight

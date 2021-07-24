@@ -20,3 +20,5 @@ export function trimVal<T>(values: T): T {
 }
 
 export const isServer = () => typeof Window === "undefined";
+
+export const countVal = () => {};
