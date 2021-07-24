@@ -20,6 +20,7 @@ import React, { Fragment, useState } from "react";
 import InputField from "../components/InputField";
 import SetInput from "../components/inputs/SetInput";
 import Layout from "../components/Layout";
+import NewExercise from "../components/workout/NewExercise";
 import { trimVal, toErrorMap } from "../constant/actions";
 import { exerciseValidator } from "../constant/utils/exerciseValidator";
 import { userValidator } from "../constant/utils/userValidate";
@@ -30,71 +31,10 @@ import { useExercisesJsonQuery } from "../generated/graphql";
 interface Props {}
 
 const Exercise = (props: Props) => {
-  const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
-
-  const [sets, setSets] = useState([]);
-  const [id, setId] = useState(1);
-  console.log(sets);
-  const addSet = (val) => {
-    setSets(val);
-  };
-
-  const removeSet = (index) => {
-    const newSet = sets.filter((a, ind) => a.id !== index);
-    setSets(newSet);
-  };
-  const renderList = () => {
-    return sets.map((a, index) => {
-      return (
-        <Tr key={index}>
-          <Td>{a.set}</Td>
-          <Td>{a.previous}</Td>
-          <Td isNumeric>{a.weight}</Td>
-          <Td isNumeric>{a.reps}</Td>
-          <Td>
-            <IconButton
-              variant="ghost"
-              aria-label="Call Segun"
-              icon={<CloseIcon />}
-              my={-2}
-              type="submit"
-              form="sets"
-              onClick={() => removeSet(a.id)}
-            />
-          </Td>
-        </Tr>
-      );
-    });
-  };
-
-  const renderExerciseList = () => {
-    return data?.exercisesJson?.map((ex) => {
-      return (
-        <Tr>
-          <Td>{ex.id + 1}</Td>
-          <Td>{ex.name}</Td>
-        </Tr>
-      );
-    });
-  };
   return (
     <Layout>
       <Fragment>
-        <Heading mt={20} size={"2xl"}>
-          Exercise
-        </Heading>
-
-        <Table variant="striped" colorScheme="teal" my={5}>
-          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-          <Thead>
-            <Tr>
-              <Th>Id</Th>
-              <Th>Name</Th>
-              {/* <Th isNumeric>multiply by</Th> */}
-            </Tr>
-          </Thead>
-          <Tbody>{renderExerciseList()}</Tbody>
-        </Table>
+        <NewExercise />
         {/* <Formik
           initialValues={{
             name: "",
