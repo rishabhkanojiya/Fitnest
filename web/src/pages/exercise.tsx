@@ -13,6 +13,7 @@ import {
   Button,
   Input,
   IconButton,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { Fragment, useState } from "react";
@@ -24,30 +25,12 @@ import { exerciseValidator } from "../constant/utils/exerciseValidator";
 import { userValidator } from "../constant/utils/userValidate";
 import { withApollo } from "../constant/withApollo";
 import { Consume } from "../Context/Consumer";
+import { useExercisesJsonQuery } from "../generated/graphql";
 
 interface Props {}
 
 const Exercise = (props: Props) => {
-  const data = [
-    {
-      set: 1,
-      previous: 1,
-      weight: 1,
-      reps: 1,
-    },
-    {
-      set: 2,
-      previous: 2,
-      weight: 2,
-      reps: 2,
-    },
-    {
-      set: 3,
-      previous: 3,
-      weight: 3,
-      reps: 3,
-    },
-  ];
+  const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
 
   const [sets, setSets] = useState([]);
   const [id, setId] = useState(1);
@@ -83,6 +66,17 @@ const Exercise = (props: Props) => {
       );
     });
   };
+
+  const renderExerciseList = () => {
+    return data?.exercisesJson?.map((ex) => {
+      return (
+        <Tr>
+          <Td>{ex.id + 1}</Td>
+          <Td>{ex.name}</Td>
+        </Tr>
+      );
+    });
+  };
   return (
     <Layout>
       <Fragment>
@@ -90,7 +84,18 @@ const Exercise = (props: Props) => {
           Exercise
         </Heading>
 
-        <Formik
+        <Table variant="striped" colorScheme="teal" my={5}>
+          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+          <Thead>
+            <Tr>
+              <Th>Id</Th>
+              <Th>Name</Th>
+              {/* <Th isNumeric>multiply by</Th> */}
+            </Tr>
+          </Thead>
+          <Tbody>{renderExerciseList()}</Tbody>
+        </Table>
+        {/* <Formik
           initialValues={{
             name: "",
             bodyPart: "",
@@ -131,6 +136,7 @@ const Exercise = (props: Props) => {
             </Fragment>
           )}
         </Formik>
+       */}
       </Fragment>
     </Layout>
   );

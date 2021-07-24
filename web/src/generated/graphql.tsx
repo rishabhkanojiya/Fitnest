@@ -31,6 +31,13 @@ export type ExerciseInput = {
   bodyPart: Scalars['String'];
 };
 
+export type ExerciseList = {
+  __typename?: 'ExerciseList';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  video: Scalars['String'];
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   errCode: Scalars['String'];
@@ -120,6 +127,7 @@ export type Query = {
   __typename?: 'Query';
   exercise?: Maybe<Exercise>;
   exercises?: Maybe<Array<Exercise>>;
+  exercisesJson?: Maybe<Array<ExerciseList>>;
   workoutExercises?: Maybe<Array<Exercise>>;
   set?: Maybe<Set>;
   sets?: Maybe<Array<Set>>;
@@ -139,6 +147,11 @@ export type QueryExerciseArgs = {
 
 
 export type QueryExercisesArgs = {
+  limit: Scalars['Int'];
+};
+
+
+export type QueryExercisesJsonArgs = {
   limit: Scalars['Int'];
 };
 
@@ -245,6 +258,29 @@ export type WorkoutInput = {
   title: Scalars['String'];
 };
 
+export type CreateExerciseMutationVariables = Exact<{
+  input: ExerciseInput;
+}>;
+
+
+export type CreateExerciseMutation = (
+  { __typename?: 'Mutation' }
+  & { createExercise: (
+    { __typename?: 'Exercise' }
+    & Pick<Exercise, 'id' | 'name' | 'bodyPart' | 'exerciseWorkId' | 'createdAt' | 'updatedAt'>
+  ) }
+);
+
+export type DeleteExerciseMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteExerciseMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteExercise'>
+);
+
 export type LoginMutationVariables = Exact<{
   usernameOrEmail: Scalars['String'];
   password: Scalars['String'];
@@ -292,6 +328,47 @@ export type RegisterMutation = (
   ) }
 );
 
+export type UpdateExerciseMutationVariables = Exact<{
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  bodyPart: Scalars['String'];
+}>;
+
+
+export type UpdateExerciseMutation = (
+  { __typename?: 'Mutation' }
+  & { updateExercise: (
+    { __typename?: 'Exercise' }
+    & Pick<Exercise, 'id' | 'name' | 'bodyPart' | 'createdAt'>
+  ) }
+);
+
+export type ExercisesQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type ExercisesQuery = (
+  { __typename?: 'Query' }
+  & { exercises?: Maybe<Array<(
+    { __typename?: 'Exercise' }
+    & Pick<Exercise, 'id' | 'name' | 'exerciseWorkId' | 'bodyPart' | 'createdAt' | 'updatedAt'>
+  )>> }
+);
+
+export type ExercisesJsonQueryVariables = Exact<{
+  limit: Scalars['Int'];
+}>;
+
+
+export type ExercisesJsonQuery = (
+  { __typename?: 'Query' }
+  & { exercisesJson?: Maybe<Array<(
+    { __typename?: 'ExerciseList' }
+    & Pick<ExerciseList, 'id' | 'name' | 'video'>
+  )>> }
+);
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -304,6 +381,75 @@ export type MeQuery = (
 );
 
 
+export const CreateExerciseDocument = gql`
+    mutation CreateExercise($input: ExerciseInput!) {
+  createExercise(input: $input) {
+    id
+    name
+    bodyPart
+    exerciseWorkId
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateExerciseMutationFn = Apollo.MutationFunction<CreateExerciseMutation, CreateExerciseMutationVariables>;
+
+/**
+ * __useCreateExerciseMutation__
+ *
+ * To run a mutation, you first call `useCreateExerciseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateExerciseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createExerciseMutation, { data, loading, error }] = useCreateExerciseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateExerciseMutation(baseOptions?: Apollo.MutationHookOptions<CreateExerciseMutation, CreateExerciseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateExerciseMutation, CreateExerciseMutationVariables>(CreateExerciseDocument, options);
+      }
+export type CreateExerciseMutationHookResult = ReturnType<typeof useCreateExerciseMutation>;
+export type CreateExerciseMutationResult = Apollo.MutationResult<CreateExerciseMutation>;
+export type CreateExerciseMutationOptions = Apollo.BaseMutationOptions<CreateExerciseMutation, CreateExerciseMutationVariables>;
+export const DeleteExerciseDocument = gql`
+    mutation DeleteExercise($id: Int!) {
+  deleteExercise(id: $id)
+}
+    `;
+export type DeleteExerciseMutationFn = Apollo.MutationFunction<DeleteExerciseMutation, DeleteExerciseMutationVariables>;
+
+/**
+ * __useDeleteExerciseMutation__
+ *
+ * To run a mutation, you first call `useDeleteExerciseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteExerciseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteExerciseMutation, { data, loading, error }] = useDeleteExerciseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteExerciseMutation(baseOptions?: Apollo.MutationHookOptions<DeleteExerciseMutation, DeleteExerciseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteExerciseMutation, DeleteExerciseMutationVariables>(DeleteExerciseDocument, options);
+      }
+export type DeleteExerciseMutationHookResult = ReturnType<typeof useDeleteExerciseMutation>;
+export type DeleteExerciseMutationResult = Apollo.MutationResult<DeleteExerciseMutation>;
+export type DeleteExerciseMutationOptions = Apollo.BaseMutationOptions<DeleteExerciseMutation, DeleteExerciseMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -417,6 +563,121 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const UpdateExerciseDocument = gql`
+    mutation UpdateExercise($id: Int!, $name: String!, $bodyPart: String!) {
+  updateExercise(id: $id, name: $name, bodyPart: $bodyPart) {
+    id
+    name
+    bodyPart
+    createdAt
+  }
+}
+    `;
+export type UpdateExerciseMutationFn = Apollo.MutationFunction<UpdateExerciseMutation, UpdateExerciseMutationVariables>;
+
+/**
+ * __useUpdateExerciseMutation__
+ *
+ * To run a mutation, you first call `useUpdateExerciseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExerciseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateExerciseMutation, { data, loading, error }] = useUpdateExerciseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      bodyPart: // value for 'bodyPart'
+ *   },
+ * });
+ */
+export function useUpdateExerciseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateExerciseMutation, UpdateExerciseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateExerciseMutation, UpdateExerciseMutationVariables>(UpdateExerciseDocument, options);
+      }
+export type UpdateExerciseMutationHookResult = ReturnType<typeof useUpdateExerciseMutation>;
+export type UpdateExerciseMutationResult = Apollo.MutationResult<UpdateExerciseMutation>;
+export type UpdateExerciseMutationOptions = Apollo.BaseMutationOptions<UpdateExerciseMutation, UpdateExerciseMutationVariables>;
+export const ExercisesDocument = gql`
+    query Exercises($limit: Int!) {
+  exercises(limit: $limit) {
+    id
+    name
+    exerciseWorkId
+    bodyPart
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useExercisesQuery__
+ *
+ * To run a query within a React component, call `useExercisesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExercisesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExercisesQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useExercisesQuery(baseOptions: Apollo.QueryHookOptions<ExercisesQuery, ExercisesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExercisesQuery, ExercisesQueryVariables>(ExercisesDocument, options);
+      }
+export function useExercisesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExercisesQuery, ExercisesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExercisesQuery, ExercisesQueryVariables>(ExercisesDocument, options);
+        }
+export type ExercisesQueryHookResult = ReturnType<typeof useExercisesQuery>;
+export type ExercisesLazyQueryHookResult = ReturnType<typeof useExercisesLazyQuery>;
+export type ExercisesQueryResult = Apollo.QueryResult<ExercisesQuery, ExercisesQueryVariables>;
+export const ExercisesJsonDocument = gql`
+    query ExercisesJson($limit: Int!) {
+  exercisesJson(limit: $limit) {
+    id
+    name
+    video
+  }
+}
+    `;
+
+/**
+ * __useExercisesJsonQuery__
+ *
+ * To run a query within a React component, call `useExercisesJsonQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExercisesJsonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExercisesJsonQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useExercisesJsonQuery(baseOptions: Apollo.QueryHookOptions<ExercisesJsonQuery, ExercisesJsonQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExercisesJsonQuery, ExercisesJsonQueryVariables>(ExercisesJsonDocument, options);
+      }
+export function useExercisesJsonLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExercisesJsonQuery, ExercisesJsonQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExercisesJsonQuery, ExercisesJsonQueryVariables>(ExercisesJsonDocument, options);
+        }
+export type ExercisesJsonQueryHookResult = ReturnType<typeof useExercisesJsonQuery>;
+export type ExercisesJsonLazyQueryHookResult = ReturnType<typeof useExercisesJsonLazyQuery>;
+export type ExercisesJsonQueryResult = Apollo.QueryResult<ExercisesJsonQuery, ExercisesJsonQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
