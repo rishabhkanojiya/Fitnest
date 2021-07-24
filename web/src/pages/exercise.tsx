@@ -35,48 +35,6 @@ const Exercise = (props: Props) => {
     <Layout>
       <Fragment>
         <NewExercise />
-        {/* <Formik
-          initialValues={{
-            name: "",
-            bodyPart: "",
-            exerciseWorkId: "",
-          }}
-          onSubmit={async (values, { setErrors }) => {
-            const trExercise = trimVal<typeof values>({ ...values });
-            // addSet([...sets, { ...values, id }]);
-            // setId(id + 1);
-            const err = exerciseValidator(trExercise);
-
-            if (err) {
-              setErrors(toErrorMap(err));
-            } else {
-              // addSet([...sets, values]);
-              // console.log("call");
-            }
-          }}
-        >
-          {(props) => (
-            <Fragment>
-              <Table variant="simple">
-                <TableCaption placement="top">Name</TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>Set</Th>
-                    <Th>Previous</Th>
-                    <Th isNumeric>Weight</Th>
-                    <Th isNumeric>Reps</Th>
-                    <Th></Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {renderList()}
-                  <SetInput isSubmitting={props.isSubmitting} />
-                </Tbody>
-              </Table>
-            </Fragment>
-          )}
-        </Formik>
-       */}
       </Fragment>
     </Layout>
   );

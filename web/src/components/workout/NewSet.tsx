@@ -35,8 +35,7 @@ const NewSet = (props: Props) => {
     return sets.map((a, index) => {
       return (
         <Tr key={index}>
-          <Td>{a.set}</Td>
-          <Td>{a.previous}</Td>
+          <Td>{a.setNo}</Td>
           <Td isNumeric>{a.weight}</Td>
           <Td isNumeric>{a.reps}</Td>
           <Td>
@@ -84,7 +83,6 @@ const NewSet = (props: Props) => {
               <Thead>
                 <Tr>
                   <Th>Set</Th>
-                  <Th>Previous</Th>
                   <Th isNumeric>Weight</Th>
                   <Th isNumeric>Reps</Th>
                   <Th></Th>

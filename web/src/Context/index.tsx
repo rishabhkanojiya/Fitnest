@@ -8,3 +8,6 @@ ShowPopupContext.displayName = "ShowPopupData";
 
 export const LoginContext = createContext(null);
 LoginContext.displayName = "LoginData";
+
+export const NewWorkoutContext = createContext(null);
+NewWorkoutContext.displayName = "NewWorkoutData";

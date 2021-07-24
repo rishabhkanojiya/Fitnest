@@ -21,13 +21,18 @@ import React, { Fragment, useState } from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import NewWorkout from "../components/workout";
+import { NewWorkoutContextType } from "../constant/Types/Context";
 import { withApollo } from "../constant/withApollo";
+import { NewWorkoutContext } from "../Context";
+import { Consume } from "../Context/Consumer";
 
-interface Props {}
+interface Props {
+  NewWorkoutData: NewWorkoutContextType;
+}
 
-const Workout = (props: Props) => {
+const Workout = ({ NewWorkoutData }: Props) => {
   const [title, setTitle] = useState(null);
-  console.log(title);
+
   return (
     <Layout>
       <Fragment>
@@ -37,10 +42,16 @@ const Workout = (props: Props) => {
 
         <SimpleGrid my={5} mx={25}>
           {/* <Box mx={2}> */}
-          <Button colorScheme="blue">Start An Empty Workout</Button>
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              NewWorkoutData.setShowPopup(true);
+            }}
+          >
+            Start An Empty Workout
+          </Button>
           {/* </Box> */}
         </SimpleGrid>
-        <NewWorkout />
         <Box m={5} p={2} borderWidth="1px" borderRadius="10px">
           <Table variant="simple">
             <TableCaption placement="top">
@@ -79,9 +90,12 @@ const Workout = (props: Props) => {
             </Tfoot>
           </Table>
         </Box>
+        <NewWorkout />
       </Fragment>
     </Layout>
   );
 };
 
-export default withApollo({ ssr: false })(Workout);
+const WorkoutConsumer = Consume(Workout, [NewWorkoutContext]);
+
+export default withApollo({ ssr: false })(WorkoutConsumer);

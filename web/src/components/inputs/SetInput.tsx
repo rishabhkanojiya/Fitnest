@@ -16,12 +16,6 @@ const SetInput = ({ isSubmitting }: Props) => {
           <InputField name={"setNo"} placeholder={"Set"} />
         </Form>
       </Td>
-      <Td textAlign="center">
-        -
-        {/* <Form id="sets">
-          <InputField name={"previous"} placeholder={"Previous"} />
-        </Form> */}
-      </Td>
       <Td>
         <Form id="sets">
           <InputField name={"weight"} placeholder={"Weight"} />

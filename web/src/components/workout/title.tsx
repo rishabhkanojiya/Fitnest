@@ -43,7 +43,7 @@ const Title = ({ title, setTitle }: Props) => {
               {(props) => (
                 <Fragment>
                   <Heading my={5} size={"md"}>
-                    Workout Title
+                    Title
                   </Heading>
                   <Flex>
                     <Form id="workout">

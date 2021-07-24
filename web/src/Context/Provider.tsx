@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LoginContext, ShowPopupContext } from ".";
+import { LoginContext, NewWorkoutContext, ShowPopupContext } from ".";
 import { apiError, sKeyType } from "../constant/errors/errors";
 import { LoginResp } from "../constant/Types/Response";
 import { MeQuery, useLoginMutation } from "../generated/graphql";
@@ -64,5 +64,40 @@ export const LoginProvider: React.FC = (props) => {
     >
       {props.children}
     </LoginContext.Provider>
+  );
+};
+
+export const NewWorkoutProvider = (props) => {
+  let [messageObj, setMessage] = useState({});
+  let [showPopup, setShowPopup] = useState(false);
+
+  const NewWorkoutMessageObj = (
+    sKey: sKeyType,
+    errorCodeP: string,
+    callback
+  ): void => {
+    const val = apiError(sKey, errorCodeP);
+    // const val = apiError.getVal(sKey, errorCodeP);
+    setMessage(val);
+    setShowPopup(true);
+
+    if (showPopup) {
+      if (callback) {
+        callback();
+      }
+    }
+  };
+
+  return (
+    <NewWorkoutContext.Provider
+      value={{
+        data: messageObj,
+        showPopup,
+        NewWorkoutMessageObj,
+        setShowPopup,
+      }}
+    >
+      {props.children}
+    </NewWorkoutContext.Provider>
   );
 };

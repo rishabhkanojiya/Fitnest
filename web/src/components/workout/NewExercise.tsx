@@ -11,7 +11,7 @@ const NewExercise = (props: Props) => {
   const renderExerciseList = () => {
     return data?.exercisesJson?.map((ex) => {
       return (
-        <Tr>
+        <Tr key={ex.id}>
           <Td>{ex.id + 1}</Td>
           <Td>{ex.name}</Td>
         </Tr>
@@ -20,7 +20,7 @@ const NewExercise = (props: Props) => {
   };
   return (
     <Fragment>
-      <Heading mt={20} size={"2xl"}>
+      <Heading mt={5} size={"2xl"}>
         Exercise
       </Heading>
 

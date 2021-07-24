@@ -14,3 +14,10 @@ export interface PopUpContextType {
   showPopup: Boolean;
   setShowPopup: (val: Boolean) => void;
 }
+
+export interface NewWorkoutContextType {
+  data: {};
+  NewWorkoutMessageObj: (sKey: sKeyType, errorCodeP: string, callback?) => void;
+  showPopup: boolean;
+  setShowPopup: (val: Boolean) => void;
+}
