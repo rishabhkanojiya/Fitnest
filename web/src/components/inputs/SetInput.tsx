@@ -6,13 +6,14 @@ import InputField from "../InputField";
 
 interface Props {
   isSubmitting: boolean;
+  exerciseId: number;
 }
 
-const SetInput = ({ isSubmitting }: Props) => {
+const SetInput = ({ isSubmitting, exerciseId }: Props) => {
   return (
     <Tr>
       <Td>
-        <Form id="sets">
+        <Form id={"sets" + exerciseId}>
           <InputField name={"setNo"} placeholder={"Set"} />
         </Form>
       </Td>
@@ -34,7 +35,7 @@ const SetInput = ({ isSubmitting }: Props) => {
           icon={<CheckIcon />}
           isLoading={isSubmitting}
           type="submit"
-          form="sets"
+          form={"sets" + exerciseId}
 
           // CloseIcon
         />

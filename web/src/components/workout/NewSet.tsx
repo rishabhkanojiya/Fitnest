@@ -23,7 +23,7 @@ interface Props {
 const NewSet = ({ exerciseId }: Props) => {
   const [sets, setSets] = useState([]);
   const [id, setId] = useState(1);
-  console.log(sets);
+  // console.log(sets);
   const addSet = (val) => {
     setSets(val);
   };
@@ -58,9 +58,10 @@ const NewSet = ({ exerciseId }: Props) => {
 
   return (
     <Fragment>
+      {console.log(exerciseId)}
       <Formik
         initialValues={{
-          exerciseId: 0,
+          exerciseId,
           setNo: "",
           previous: "",
           weight: "",
@@ -68,14 +69,13 @@ const NewSet = ({ exerciseId }: Props) => {
           setType: "",
         }}
         onSubmit={async (values, { setErrors }) => {
-          let trSet = trimVal({ ...values, exerciseId });
+          console.log(values);
+          let trSet = trimVal({ ...values });
           const err = setValidator(trSet);
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            console.log(trSet);
-
-            // addSet([...sets, values]);
+            addSet([...sets, values]);
           }
         }}
       >
@@ -93,7 +93,10 @@ const NewSet = ({ exerciseId }: Props) => {
               </Thead>
               <Tbody>
                 {renderList()}
-                <SetInput isSubmitting={props.isSubmitting} />
+                <SetInput
+                  isSubmitting={props.isSubmitting}
+                  exerciseId={exerciseId}
+                />
               </Tbody>
             </Table>
           </Fragment>
