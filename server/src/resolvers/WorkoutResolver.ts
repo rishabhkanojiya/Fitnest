@@ -80,6 +80,19 @@ export class WorkoutResolver {
     return workouts;
   }
 
+  @Query(() => Number, { nullable: true })
+  async workoutCounts(
+    @Arg("id", () => Int) id: number
+  ): Promise<number | undefined> {
+    const workouts = await getConnection()
+      .getRepository(Workout)
+      .createQueryBuilder("w")
+      .where("w.workoutUserId = :id", { id })
+      .getCount();
+
+    return workouts;
+  }
+
   @Mutation(() => WorkOutRespone)
   async createWorkout(
     @Arg("input") input: WorkoutInput,

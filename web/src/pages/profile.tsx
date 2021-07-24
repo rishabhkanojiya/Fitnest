@@ -13,11 +13,35 @@ import {
 } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import {
+  LoginContextType,
+  NewWorkoutContextType,
+} from "../constant/Types/Context";
 import { withApollo } from "../constant/withApollo";
+import { LoginContext, NewWorkoutContext } from "../Context";
+import { Consume } from "../Context/Consumer";
+import {
+  useUserWorkoutsCountsQuery,
+  useUserWorkoutsQuery,
+} from "../generated/graphql";
 
-interface Props {}
+interface Props {
+  LoginData: LoginContextType;
+  NewWorkoutData: NewWorkoutContextType;
+}
 
-const Profile = (props: Props) => {
+const Profile = ({ LoginData, NewWorkoutData }: Props) => {
+  let data, loading;
+
+  if (LoginData?.data?.me?.id) {
+    let userWOrk = useUserWorkoutsCountsQuery({
+      variables: { id: LoginData?.data?.me?.id },
+    });
+
+    data = userWOrk?.data?.workoutCounts;
+    loading = userWOrk.loading;
+  }
+
   return (
     <Layout>
       <Fragment>
@@ -35,23 +59,25 @@ const Profile = (props: Props) => {
               <Tr>
                 <Th>Types</Th>
                 {/* <Th>into</Th> */}
-                <Th isNumeric>multiply by</Th>
+                <Th isNumeric>Count</Th>
               </Tr>
             </Thead>
             <Tbody>
               <Tr>
                 <Td>Workouts</Td>
                 {/* <Td>millimetres (mm)</Td> */}
+                <Td isNumeric>{data ? data : ""}</Td>
+              </Tr>
+              {/* <Tr>
+                <Td>Exercises</Td>
                 <Td isNumeric>25.4</Td>
               </Tr>
-            </Tbody>
-            <Tfoot>
               <Tr>
-                <Th>To convert</Th>
-                {/* <Th>into</Th> */}
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Tfoot>
+                <Td>Sets</Td>
+                <Td isNumeric>25.4</Td>
+              </Tr> */}
+            </Tbody>
+            {/* <Tfoot></Tfoot> */}
           </Table>
         </SimpleGrid>
       </Fragment>
@@ -59,4 +85,6 @@ const Profile = (props: Props) => {
   );
 };
 
-export default withApollo({ ssr: false })(Profile);
+const ProfileConsumer = Consume(Profile, [LoginContext, NewWorkoutContext]);
+
+export default withApollo({ ssr: false })(ProfileConsumer);

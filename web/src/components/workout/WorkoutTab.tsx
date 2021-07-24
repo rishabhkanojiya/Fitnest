@@ -46,7 +46,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
     loading = userWOrk.loading;
   }
 
-  NewWorkoutData.setUserWOrk(data);
+  // NewWorkoutData.setUserWOrk(data);
 
   // function usePrevious(value) {
   //   const ref = useRef();

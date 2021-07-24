@@ -1,0 +1,3 @@
+query UserWorkoutsCounts($id: Int!) {
+  workoutCounts(id: $id)
+}
