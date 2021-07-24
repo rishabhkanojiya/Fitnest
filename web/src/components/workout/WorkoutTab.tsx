@@ -1,4 +1,6 @@
 import {
+  Box,
+  Divider,
   Heading,
   SimpleGrid,
   Skeleton,
@@ -15,7 +17,10 @@ import React, { Fragment } from "react";
 import { LoginContextType } from "../../constant/Types/Context";
 import { LoginContext } from "../../Context";
 import { Consume } from "../../Context/Consumer";
-import { useUserWorkoutsQuery } from "../../generated/graphql";
+import {
+  UserWorkFragment,
+  useUserWorkoutsQuery,
+} from "../../generated/graphql";
 import TableSkel from "../Skeleton/table";
 import Title from "./title";
 import NewExercise from "./NewExercise";
@@ -29,17 +34,66 @@ const WorkoutTab = ({ LoginData }: Props) => {
 
   if (LoginData?.data?.me?.id) {
     let userWOrk = useUserWorkoutsQuery({
-      variables: { id: LoginData?.data?.me?.id, limit: 10 },
+      variables: { id: LoginData?.data?.me?.id, limit: 5 },
     });
 
-    data = userWOrk.data;
+    data = userWOrk?.data?.userWorkouts;
     loading = userWOrk.loading;
   }
 
-  console.log(loading, data);
-  const renderUserWorks = () => {
-    if (loading) {
-      //   clg;
+  const renderExer = (workExercise) => {
+    return workExercise.map((a) => {
+      return (
+        <Fragment>
+          <Divider />
+          <Heading size="md" m={2}>
+            {a.name}
+          </Heading>
+          <Table variant="unstyled">
+            <Thead>
+              <Tr>
+                <Th>Set</Th>
+                <Th isNumeric>Weight</Th>
+                <Th isNumeric>Reps</Th>
+              </Tr>
+            </Thead>
+
+            <Tbody>
+              {a.exerciseSets.map((s) => {
+                return (
+                  <Tr>
+                    <Td>{s.setNo}</Td>
+                    <Td isNumeric>{s.weight}</Td>
+                    <Td isNumeric>{s.reps}</Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </Fragment>
+      );
+    });
+  };
+
+  const renderUserWorks = (data: UserWorkFragment[]) => {
+    if (data) {
+      return data.map(({ id, title, workExercise, workoutUser }) => {
+        return (
+          <Fragment key={id}>
+            <Box p={2} borderWidth="1px" borderRadius="10px" mb="3">
+              <Heading size="lg" m={2}>
+                {title}
+              </Heading>
+              {/* {workExercise.map((a) => {
+                return (
+                  
+                );
+              })} */}
+              {renderExer(workExercise)}
+            </Box>
+          </Fragment>
+        );
+      });
     }
   };
 
@@ -51,40 +105,8 @@ const WorkoutTab = ({ LoginData }: Props) => {
     <Fragment>
       {/* <Title />
       <NewExercise /> */}
-      <Heading size="lg" m={2}>
-        Title
-      </Heading>
 
-      <Heading size="md" m={2}>
-        Exercise
-      </Heading>
-
-      <Table variant="unstyled">
-        <Thead>
-          <Tr>
-            <Th>Set</Th>
-            <Th isNumeric>Weight</Th>
-            <Th isNumeric>Reps</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td isNumeric>25.4</Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td isNumeric>30.48</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td isNumeric>0.91444</Td>
-          </Tr>
-        </Tbody>
-      </Table>
+      {renderUserWorks(data)}
     </Fragment>
   );
 };

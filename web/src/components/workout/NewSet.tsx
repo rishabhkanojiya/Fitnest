@@ -95,8 +95,6 @@ const NewSet = ({ exerciseId }: Props) => {
         onSubmit={async (values, { setErrors }) => {
           let trSet = trimVal({ ...values, setNo: setNoId });
           const err = setValidator(trSet);
-          console.log(trSet);
-          console.log(err);
           if (err) {
             setErrors(toErrorMap(err));
           } else {

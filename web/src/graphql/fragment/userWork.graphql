@@ -1,0 +1,20 @@
+fragment userWork on Workout {
+  id
+  title
+  workoutUserId
+  workoutUser {
+    username
+  }
+
+  workExercise {
+    id
+    name
+
+    exerciseSets {
+      setNo
+      setType
+      weight
+      reps
+    }
+  }
+}
