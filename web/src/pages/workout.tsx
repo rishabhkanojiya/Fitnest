@@ -14,11 +14,13 @@ import {
   Flex,
   Input,
   IconButton,
+  Button,
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { Fragment, useState } from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
+import NewWorkout from "../components/workout";
 import { withApollo } from "../constant/withApollo";
 
 interface Props {}
@@ -33,67 +35,12 @@ const Workout = (props: Props) => {
           Workout
         </Heading>
 
-        <SimpleGrid columns={3} justifyItems="center" alignItems="center">
-          {title ? (
-            <Fragment>
-              <Heading my={5} size={"md"}>
-                {title}
-              </Heading>
-              <Flex justifySelf="start">
-                <IconButton
-                  onClick={() => {
-                    setTitle(null);
-                  }}
-                  variant="ghost"
-                  aria-label="Call Segun"
-                  icon={<EditIcon />}
-                  // isLoading={}
-                  type="submit"
-                  // form="workout"
-                />
-              </Flex>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Formik
-                initialValues={{ title: "" }}
-                onSubmit={async (values, { setErrors }) => {
-                  setTitle(values.title);
-                }}
-              >
-                {(props) => (
-                  <Fragment>
-                    <Heading my={5} size={"md"}>
-                      Workout Title
-                    </Heading>
-                    <Flex>
-                      <Form id="workout">
-                        <InputField
-                          name={"title"}
-                          // label={"Title"}
-                          // value="adsad"
-                          placeholder={"Title"}
-                        />
-                      </Form>
-                    </Flex>
-
-                    <Flex>
-                      <IconButton
-                        variant="ghost"
-                        aria-label="Call Segun"
-                        icon={<CheckIcon />}
-                        isLoading={props.isSubmitting}
-                        type="submit"
-                        form="workout"
-                      />
-                    </Flex>
-                  </Fragment>
-                )}
-              </Formik>
-            </Fragment>
-          )}
+        <SimpleGrid my={5} mx={25}>
+          {/* <Box mx={2}> */}
+          <Button colorScheme="blue">Start An Empty Workout</Button>
+          {/* </Box> */}
         </SimpleGrid>
-
+        <NewWorkout />
         <Box m={5} p={2} borderWidth="1px" borderRadius="10px">
           <Table variant="simple">
             <TableCaption placement="top">
