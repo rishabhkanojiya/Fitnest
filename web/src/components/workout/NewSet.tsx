@@ -26,6 +26,7 @@ interface Props {
 }
 
 const NewSet = ({ exerciseId }: Props) => {
+  const [setNoId, setSetNoId] = useState(1);
   const [createSet] = useCreateSetsMutation();
   const [deleteSet] = useDeleteSetMutation();
 
@@ -43,6 +44,7 @@ const NewSet = ({ exerciseId }: Props) => {
   };
 
   const addSet = async (trSet) => {
+    setSetNoId(setNoId + 1);
     await createSet({
       variables: {
         input: {
@@ -86,19 +88,18 @@ const NewSet = ({ exerciseId }: Props) => {
       <Formik
         initialValues={{
           exerciseId,
-          setNo: "",
           weight: "",
           reps: "",
           setType: "",
         }}
         onSubmit={async (values, { setErrors }) => {
-          let trSet = trimVal({ ...values });
+          let trSet = trimVal({ ...values, setNo: setNoId });
           const err = setValidator(trSet);
+          console.log(trSet);
           console.log(err);
           if (err) {
             setErrors(toErrorMap(err));
           } else {
-            // addSet([...sets, values]);
             addSet(trSet);
           }
         }}
@@ -106,7 +107,6 @@ const NewSet = ({ exerciseId }: Props) => {
         {(props) => (
           <Fragment>
             <Table variant="simple">
-              {/* <TableCaption placement="top">Name</TableCaption> */}
               <Thead>
                 <Tr>
                   <Th>Set</Th>
@@ -118,6 +118,7 @@ const NewSet = ({ exerciseId }: Props) => {
               <Tbody>
                 {renderList()}
                 <SetInput
+                  setNoId={setNoId}
                   isSubmitting={props.isSubmitting}
                   exerciseId={exerciseId}
                 />

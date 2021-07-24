@@ -37,7 +37,7 @@ export class SetResolver {
       .getRepository(Set)
       .createQueryBuilder("s")
       .where("s.exerciseId = :id", { id })
-      .orderBy("s.createdAt", "DESC")
+      // .orderBy("s.createdAt", "DESC")
       .take(realLimit)
       .getMany();
 

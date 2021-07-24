@@ -74,7 +74,7 @@ export class ExerciseResolver {
       .getRepository(Exercise)
       .createQueryBuilder("e")
       .where("e.exerciseWorkId = :id", { id })
-      .orderBy("e.createdAt", "DESC")
+      // .orderBy("e.createdAt", "DESC")
       .take(realLimit)
       .getMany();
 

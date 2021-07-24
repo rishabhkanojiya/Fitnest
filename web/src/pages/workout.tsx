@@ -21,6 +21,7 @@ import React, { Fragment, useState } from "react";
 import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import NewWorkout from "../components/workout";
+import WorkoutTab from "../components/workout/WorkoutTab";
 import { NewWorkoutContextType } from "../constant/Types/Context";
 import { withApollo } from "../constant/withApollo";
 import { NewWorkoutContext } from "../Context";
@@ -52,6 +53,9 @@ const Workout = ({ NewWorkoutData }: Props) => {
           </Button>
           {/* </Box> */}
         </SimpleGrid>
+        <Box m={5} p={2}>
+          <WorkoutTab />
+        </Box>
         <Box m={5} p={2} borderWidth="1px" borderRadius="10px">
           <Table variant="simple">
             <TableCaption placement="top">

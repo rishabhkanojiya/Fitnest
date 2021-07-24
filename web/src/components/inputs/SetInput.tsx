@@ -5,18 +5,15 @@ import React from "react";
 import InputField from "../InputField";
 
 interface Props {
+  setNoId: number;
   isSubmitting: boolean;
   exerciseId: number;
 }
 
-const SetInput = ({ isSubmitting, exerciseId }: Props) => {
+const SetInput = ({ isSubmitting, exerciseId, setNoId }: Props) => {
   return (
     <Tr>
-      <Td>
-        <Form id={"sets" + exerciseId}>
-          <InputField name={"setNo"} placeholder={"Set"} />
-        </Form>
-      </Td>
+      <Td>{setNoId}</Td>
       <Td>
         <Form id="sets">
           <InputField name={"weight"} placeholder={"Weight"} />
@@ -24,7 +21,7 @@ const SetInput = ({ isSubmitting, exerciseId }: Props) => {
       </Td>
       <Td>
         <Form id="sets">
-          <InputField name={"reps"} placeholder={"Rassword"} />
+          <InputField name={"reps"} placeholder={"Password"} />
         </Form>
       </Td>
       <Td>
