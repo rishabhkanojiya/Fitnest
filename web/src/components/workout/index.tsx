@@ -39,12 +39,11 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
     exercise: [],
     set: [],
   });
-  const [title, setTitle] = useState<string>(null);
 
-  const titleProps = {
-    title,
-    setTitle,
-  };
+  // const titleProps = {
+  //   title,
+  //   setTitle,
+  // };
 
   // function BasicUsage() {
   //   return (
@@ -70,7 +69,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
           <ModalCloseButton />
           <ModalBody>
             <Fragment>
-              <Title {...titleProps} />
+              <Title />
 
               {/* <Box textAlign="center">
                 <Button onClick={() => setOpenExer(true)}>Add Exercise</Button>
@@ -88,7 +87,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               variant="ghost"
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
-                setWorkout({ exercise: [], title: title, set: [] });
+                setWorkout({ exercise: [], title: "", set: [] });
               }}
             >
               Submit

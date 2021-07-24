@@ -1,18 +1,42 @@
 import { EditIcon, CheckIcon } from "@chakra-ui/icons";
 import { SimpleGrid, Heading, Flex, IconButton } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { toErrorMap, trimVal } from "../../constant/actions";
 import { titleValidator } from "../../constant/utils/titleValidate";
+import {
+  useCreateWorkoutMutation,
+  useUpdateWorkoutMutation,
+} from "../../generated/graphql";
 import InputField from "../InputField";
 
 interface Props {
-  title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  // title: string;
+  // setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Title = ({ title, setTitle }: Props) => {
-  // usework
+const Title = ({}: Props) => {
+  const [title, setTitle] = useState<string>(null);
+  const [edit, setEdit] = useState(false);
+  const [work, setWork] = useState(null);
+  const [workid, setWorkid] = useState(null);
+  const [createWork] = useCreateWorkoutMutation();
+  const [updateWork] = useUpdateWorkoutMutation();
+  // console.log(workid);
+  useEffect(() => {
+    if (title) {
+      if (edit) {
+        updateWork({
+          variables: { id: workid, title: title },
+        }).then((res) => console.log(res));
+      } else {
+        createWork({
+          variables: { input: { title: title } },
+        }).then((res) => setWorkid(res.data.createWorkout.workout.id));
+      }
+    }
+  }, [title, edit]);
+
   return (
     <Fragment>
       <SimpleGrid columns={3} justifyItems="center" alignItems="center">
@@ -24,6 +48,8 @@ const Title = ({ title, setTitle }: Props) => {
             <Flex justifySelf="start">
               <IconButton
                 onClick={() => {
+                  // setTitle(null);
+                  setEdit(true);
                   setTitle(null);
                 }}
                 variant="ghost"
@@ -46,6 +72,8 @@ const Title = ({ title, setTitle }: Props) => {
                   setErrors(toErrorMap(err));
                 } else {
                   setTitle(newVal.title);
+
+                  // setTitle(work.data.createWorkout.workout.title);
                 }
               }}
             >
