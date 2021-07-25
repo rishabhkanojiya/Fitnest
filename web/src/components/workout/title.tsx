@@ -39,7 +39,6 @@ const Title = ({ NewWorkoutData }: Props) => {
           variables: { input: { title: title } },
         }).then((res) => {
           NewWorkoutData.setWorkid(res.data.createWorkout.workout.id);
-
           setWorkid(res.data.createWorkout.workout.id);
         });
       }

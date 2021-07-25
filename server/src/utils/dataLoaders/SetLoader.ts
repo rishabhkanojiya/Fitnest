@@ -9,6 +9,7 @@ const setOfExercise = async (ids: readonly number[]) => {
     .createQueryBuilder("s")
     .leftJoinAndSelect("s.exerciseSets", "set")
     .where("s.id IN (:...ids)", { ids })
+    .orderBy("s.createdAt", "DESC")
     .getMany();
 
   return exercises.map((exercise) => exercise.exerciseSets);
