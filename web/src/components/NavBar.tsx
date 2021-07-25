@@ -1,4 +1,13 @@
-import { Button, Flex, Link } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Select,
+} from "@chakra-ui/react";
 import React, { Fragment, useEffect } from "react";
 import NextLink from "next/link";
 import configs from "../constant/configs";
@@ -12,6 +21,7 @@ import {
   useMeQuery,
 } from "../generated/graphql";
 import { useRouter } from "next/dist/client/router";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface Props {
   LoginData: LoginContextType;
@@ -28,7 +38,7 @@ const NavBar = ({ LoginData }: Props) => {
   }, [data]);
 
   return (
-    <Flex mb={2} justifyContent="space-between">
+    <Flex mb={2} justifyContent="space-between" alignItems="center">
       <Flex>
         <NextLink href={configs.enumUrl.profile.link}>
           <Link ml={2} mr={2}>
@@ -57,27 +67,62 @@ const NavBar = ({ LoginData }: Props) => {
       <Flex>
         {LoginData.data?.me ? (
           <Fragment>
-            <NextLink href={configs.enumUrl.profile.link}>
-              <Link ml={2} mr={2}>
+            <Menu>
+              <MenuButton
+                variant="unstyled"
+                as={Link}
+                rightIcon={<ChevronDownIcon />}
+              >
                 {LoginData.data?.me?.username}
-              </Link>
-            </NextLink>
-
-            <Link
-              ml={2}
-              mr={2}
-              onClick={async () => {
-                await logout();
-                LoginData.delUserObj();
-                router.reload();
-              }}
-            >
-              {configs.enumUrl.logout.title}
-            </Link>
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    router.push(configs.enumUrl.profile.link);
+                  }}
+                >
+                  {LoginData.data?.me?.username}
+                </MenuItem>
+                <MenuItem
+                  onClick={async () => {
+                    await logout();
+                    LoginData.delUserObj();
+                    router.reload();
+                  }}
+                >
+                  {configs.enumUrl.logout.title}
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Fragment>
         ) : (
           <Fragment>
-            <NextLink href={configs.enumUrl.login.link}>
+            <Menu>
+              <MenuButton
+                variant="unstyled"
+                as={Link}
+                rightIcon={<ChevronDownIcon />}
+              >
+                Login
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  onClick={() => {
+                    router.push(configs.enumUrl.login.link);
+                  }}
+                >
+                  {configs.enumUrl.login.title}
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    router.push(configs.enumUrl.register.link);
+                  }}
+                >
+                  {configs.enumUrl.register.title}
+                </MenuItem>
+              </MenuList>
+            </Menu>
+            {/* <NextLink href={configs.enumUrl.login.link}>
               <Link ml={2} mr={2}>
                 {configs.enumUrl.login.title}
               </Link>
@@ -87,7 +132,7 @@ const NavBar = ({ LoginData }: Props) => {
               <Link ml={2} mr={2}>
                 {configs.enumUrl.register.title}
               </Link>
-            </NextLink>
+            </NextLink> */}
           </Fragment>
         )}
       </Flex>
