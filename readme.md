@@ -37,4 +37,4 @@ The app consist of two folders
 
 ## Web
 
-1 .The frontend code on the web is made up of Nextjs and Apollo Client.
+1. The frontend code on the web is made up of Nextjs and Apollo Client.
