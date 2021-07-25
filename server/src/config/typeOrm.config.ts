@@ -6,7 +6,7 @@ import { Set } from "../entites/Set";
 import { ConnectionOptions } from "typeorm";
 export default {
   type: "postgres",
-  url: "postgresql://postgres:Sportz@123@localhost:5432/typeOrm",
+  url: process.env.DATABASE_URL,
   logging: true,
   synchronize: true,
   migrations: [path.join(__dirname, "../migrations/*")],

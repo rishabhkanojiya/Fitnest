@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import connectRedis from "connect-redis";
 import cors from "cors";
+import "dotenv-safe/config";
 import express from "express";
 import session from "express-session";
 import Redis from "ioredis";
@@ -24,13 +25,13 @@ const main = async () => {
   const app = express();
 
   const RedisStore = connectRedis(session);
-  const redis = new Redis("127.0.0.1:6379");
+  const redis = new Redis(process.env.REDIS_URL);
 
   app.set("trust proxy", 1);
 
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: process.env.CORS_ORIGIN,
       credentials: true,
     })
   );
@@ -50,7 +51,7 @@ const main = async () => {
         domain: config.__prod__ ? ".relise.xyz" : undefined,
       },
       saveUninitialized: false,
-      secret: "asdasdasdasd asdasdasda sdasdasd asd as d sa",
+      secret: process.env.SESSION_SECRET,
       resave: false,
     })
   );
@@ -77,8 +78,8 @@ const main = async () => {
     cors: false,
   });
 
-  app.listen(4000, () => {
-    console.log(`App on ${4000}`);
+  app.listen(process.env.PORT, () => {
+    console.log(`App on ${process.env.PORT}`);
   });
 };
 
