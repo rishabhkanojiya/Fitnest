@@ -1,4 +1,4 @@
-### FITNEST
+# FITNEST
 
 ## A Fitness App
 
@@ -10,7 +10,7 @@ FITNEST is a fitness app that keeps track of all your workouts, exercises, and s
 
 ## TechStack
 
-the software used are :
+The software used are :
 
 - Typescript
 - Graphql / type-graphql
@@ -20,12 +20,21 @@ the software used are :
 
 ## Info
 
-the app consist of two folders
+The app consist of two folders
 
-'''
+```
 /server
-'''
+```
 
-'''
+```
 /web
-'''
+```
+
+## Server
+
+1. The backend code for the server is made up of a postgres database and an express/apollo server.
+2. The entire code is written in typescript, and type-graphql and typeOrm are used to handle it.
+
+## Web
+
+1 .The frontend code on the web is made up of Nextjs and Apollo Client.
