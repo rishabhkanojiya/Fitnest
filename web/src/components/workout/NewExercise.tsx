@@ -1,37 +1,37 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import {
-  Tr,
-  Td,
-  Heading,
-  Table,
-  Thead,
-  Th,
-  Tbody,
   Box,
   Button,
-  SimpleGrid,
+  Heading,
   IconButton,
+  SimpleGrid,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
 } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { NewWorkoutContextType } from "../../constant/Types/Context";
 import { NewWorkoutContext } from "../../Context";
 import { Consume } from "../../Context/Consumer";
 import {
   ExerciseFragFragment,
-  ExerciseList,
   useCreateExerciseMutation,
   useDeleteExerciseMutation,
   useExercisesJsonQuery,
   useWorkoutExercisesQuery,
 } from "../../generated/graphql";
-import Layout from "../Layout";
+import ExerList from "./ExerList";
 import NewSet from "./NewSet";
-import { memoize } from "lodash";
+
 interface Props {
   // setExerciseCb: (ex: ExerciseList) => void;
   // setOpenExer: (val: boolean) => void;
 
-  NewWorkoutData: NewWorkoutContextType;
+  NewWorkoutData?: NewWorkoutContextType;
+  page?: boolean;
 }
 
 const NewExercise = ({ NewWorkoutData }: Props) => {
@@ -40,7 +40,7 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
   const [createExer] = useCreateExerciseMutation();
   const [deleteExer] = useDeleteExerciseMutation();
 
-  const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
+  // const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
 
   const { data: exercise, loading } = useWorkoutExercisesQuery({
     variables: { limit: 50, id: NewWorkoutData.workid },
@@ -56,7 +56,7 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
   };
 
   const addExer = (ex) => {
-    const exer = createExer({
+    createExer({
       variables: {
         input: {
           name: ex.name,
@@ -98,22 +98,22 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
     });
   };
 
-  const renderExerciseList = () => {
-    return data?.exercisesJson?.map((ex) => {
-      return (
-        <Tr
-          key={ex.id}
-          onClick={() => {
-            addExer(ex);
-          }}
-        >
-          <Td>{ex.id + 1}</Td>
-          <Td>{ex.name}</Td>
-          <Td>{ex.bodyPart}</Td>
-        </Tr>
-      );
-    });
-  };
+  // const renderExerciseList = () => {
+  //   return data?.exercisesJson?.map((ex) => {
+  //     return (
+  //       <Tr
+  //         key={ex.id}
+  //         onClick={() => {
+  //           addExer(ex);
+  //         }}
+  //       >
+  //         <Td>{ex.id + 1}</Td>
+  //         <Td>{ex.name}</Td>
+  //         <Td>{ex.bodyPart}</Td>
+  //       </Tr>
+  //     );
+  //   });
+  // };
   return (
     <Fragment>
       <Heading mt={5} size={"2xl"}>
@@ -130,19 +130,21 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
           <Button onClick={() => setOpenExer(true)}>Add Exercise</Button>
         </Box>
       ) : (
-        <Table variant="striped" colorScheme="teal" my={5}>
-          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-          <Thead>
-            <Tr>
-              <Th>Id</Th>
-              <Th>Name</Th>
-              <Th>BodyPart</Th>
-              {/* <Th isNumeric>multiply by</Th> */}
-            </Tr>
-          </Thead>
+        <ExerList page={false} addExer={addExer} />
 
-          <Tbody>{renderExerciseList()}</Tbody>
-        </Table>
+        // <Table variant="striped" colorScheme="teal" my={5}>
+        //   {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
+        //   <Thead>
+        //     <Tr>
+        //       <Th>Id</Th>
+        //       <Th>Name</Th>
+        //       <Th>BodyPart</Th>
+        //       {/* <Th isNumeric>multiply by</Th> */}
+        //     </Tr>
+        //   </Thead>
+
+        //   <Tbody>{renderExerciseList()}</Tbody>
+        // </Table>
       )}
     </Fragment>
   );
