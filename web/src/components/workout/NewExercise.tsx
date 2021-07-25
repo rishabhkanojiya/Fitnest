@@ -40,8 +40,6 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
   const [createExer] = useCreateExerciseMutation();
   const [deleteExer] = useDeleteExerciseMutation();
 
-  // const { data } = useExercisesJsonQuery({ variables: { limit: 50 } });
-
   const { data: exercise, loading } = useWorkoutExercisesQuery({
     variables: { limit: 50, id: NewWorkoutData.workid },
   });
@@ -98,22 +96,6 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
     });
   };
 
-  // const renderExerciseList = () => {
-  //   return data?.exercisesJson?.map((ex) => {
-  //     return (
-  //       <Tr
-  //         key={ex.id}
-  //         onClick={() => {
-  //           addExer(ex);
-  //         }}
-  //       >
-  //         <Td>{ex.id + 1}</Td>
-  //         <Td>{ex.name}</Td>
-  //         <Td>{ex.bodyPart}</Td>
-  //       </Tr>
-  //     );
-  //   });
-  // };
   return (
     <Fragment>
       <Heading mt={5} size={"2xl"}>
@@ -131,20 +113,6 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
         </Box>
       ) : (
         <ExerList page={false} addExer={addExer} />
-
-        // <Table variant="striped" colorScheme="teal" my={5}>
-        //   {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-        //   <Thead>
-        //     <Tr>
-        //       <Th>Id</Th>
-        //       <Th>Name</Th>
-        //       <Th>BodyPart</Th>
-        //       {/* <Th isNumeric>multiply by</Th> */}
-        //     </Tr>
-        //   </Thead>
-
-        //   <Tbody>{renderExerciseList()}</Tbody>
-        // </Table>
       )}
     </Fragment>
   );
