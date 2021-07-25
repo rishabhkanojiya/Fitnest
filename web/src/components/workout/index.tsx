@@ -48,8 +48,8 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               variables: { id: NewWorkoutData?.workid },
 
               update: (caches) => {
-                caches.evict({ fieldName: "workoutExercises" });
-                caches.evict({ fieldName: "exerciseSet" });
+                // caches.evict({ fieldName: "workoutExercises" });
+                // caches.evict({ fieldName: "exerciseSet" });
               },
             }).then((res) => {
               if (res.data.deleteWorkout) {
@@ -77,6 +77,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
                 NewWorkoutData.setWorkid(null);
+                NewWorkoutData.setRefetchUserWorks(true);
               }}
             >
               Submit

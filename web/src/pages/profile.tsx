@@ -49,7 +49,7 @@ const Profile = ({ LoginData, NewWorkoutData }: Props) => {
           Profile
         </Heading>
         <Text mt={3} fontSize="4xl">
-          Rishabh Kanojiya
+          {LoginData?.data?.me?.username}
         </Text>
 
         <SimpleGrid>
@@ -65,19 +65,9 @@ const Profile = ({ LoginData, NewWorkoutData }: Props) => {
             <Tbody>
               <Tr>
                 <Td>Workouts</Td>
-                {/* <Td>millimetres (mm)</Td> */}
-                <Td isNumeric>{data ? data : ""}</Td>
+                <Td isNumeric>{data ? data : "-"}</Td>
               </Tr>
-              {/* <Tr>
-                <Td>Exercises</Td>
-                <Td isNumeric>25.4</Td>
-              </Tr>
-              <Tr>
-                <Td>Sets</Td>
-                <Td isNumeric>25.4</Td>
-              </Tr> */}
             </Tbody>
-            {/* <Tfoot></Tfoot> */}
           </Table>
         </SimpleGrid>
       </Fragment>

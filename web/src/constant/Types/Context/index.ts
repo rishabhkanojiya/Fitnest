@@ -29,4 +29,6 @@ export interface NewWorkoutContextType {
   setShowPopup: (val: Boolean) => void;
   userWOrk: UserWorkFragment;
   setUserWOrk: (val: UserWorkFragment) => void;
+  refetchUserWorks: boolean;
+  setRefetchUserWorks: (val: boolean) => void;
 }

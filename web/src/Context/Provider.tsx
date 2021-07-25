@@ -72,6 +72,7 @@ export const NewWorkoutProvider = (props) => {
   const [userWOrk, setUserWOrk] = useState(null);
   let [showPopup, setShowPopup] = useState(false);
   let [workid, setWorkid] = useState(null);
+  const [refetchUserWorks, setRefetchUserWorks] = useState(false);
 
   const NewWorkoutMessageObj = (
     sKey: sKeyType,
@@ -101,6 +102,8 @@ export const NewWorkoutProvider = (props) => {
         setShowPopup,
         userWOrk,
         setUserWOrk,
+        refetchUserWorks,
+        setRefetchUserWorks,
       }}
     >
       {props.children}

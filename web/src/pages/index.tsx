@@ -11,50 +11,25 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useRouter } from "next/dist/client/router";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import { isServer } from "../constant/actions";
+import configs from "../constant/configs";
 import { withApollo } from "../constant/withApollo";
 
 interface Props {}
 
 const index = (props: Props) => {
+  const router = useRouter();
+
+  if (!isServer()) {
+    router.push(configs.enumUrl.profile.link);
+  }
+
   return (
     <Layout>
-      <Fragment>
-        <Heading mt={20} size={"2xl"}>
-          Profile
-        </Heading>
-        <Text mt={3} fontSize="4xl">
-          Rishabh Kanojiya
-        </Text>
-
-        <SimpleGrid>
-          <Table variant="simple">
-            <TableCaption placement="top">All User Info </TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Types</Th>
-                {/* <Th>into</Th> */}
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>Workouts</Td>
-                {/* <Td>millimetres (mm)</Td> */}
-                <Td isNumeric>25.4</Td>
-              </Tr>
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>To convert</Th>
-                {/* <Th>into</Th> */}
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Tfoot>
-          </Table>
-        </SimpleGrid>
-      </Fragment>
+      <Fragment></Fragment>
     </Layout>
   );
 };

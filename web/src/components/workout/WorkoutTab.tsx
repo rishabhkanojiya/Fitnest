@@ -28,15 +28,16 @@ interface Props {
 }
 
 const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
-  let data, loading;
+  let data, loading, refetch;
 
   if (LoginData?.data?.me?.id) {
-    let userWOrk = useUserWorkoutsQuery({
+    let userWork = useUserWorkoutsQuery({
       variables: { id: LoginData?.data?.me?.id, limit: 5 },
     });
 
-    data = userWOrk?.data?.userWorkouts;
-    loading = userWOrk.loading;
+    data = userWork?.data?.userWorkouts;
+    loading = userWork.loading;
+    refetch = userWork.refetch;
   }
 
   // NewWorkoutData.setUserWOrk(data);
@@ -53,6 +54,11 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
 
   // if (NewWorkoutData.data !== data) {
   // }
+
+  if (NewWorkoutData.refetchUserWorks && refetch) {
+    refetch();
+    NewWorkoutData.setRefetchUserWorks(false);
+  }
 
   const renderExer = (workExercise) => {
     return workExercise.map((a) => {
@@ -106,7 +112,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
     }
   };
 
-  if (!data) {
+  if (!data && LoginData?.data?.me?.id) {
     return <TableSkel />;
   }
 
