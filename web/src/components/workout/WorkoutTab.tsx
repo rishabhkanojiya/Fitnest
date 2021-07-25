@@ -32,7 +32,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
 
   if (LoginData?.data?.me?.id) {
     let userWork = useUserWorkoutsQuery({
-      variables: { id: LoginData?.data?.me?.id, limit: 5 },
+      variables: { id: LoginData?.data?.me?.id, limit: 10 },
     });
 
     data = userWork?.data?.userWorkouts;
