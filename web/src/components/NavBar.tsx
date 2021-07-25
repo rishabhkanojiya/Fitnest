@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -6,22 +7,15 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Select,
 } from "@chakra-ui/react";
-import React, { Fragment, useEffect } from "react";
+import { useRouter } from "next/dist/client/router";
 import NextLink from "next/link";
+import React, { Fragment, useEffect } from "react";
 import configs from "../constant/configs";
 import { LoginContextType } from "../constant/Types/Context";
-import { Consume } from "../Context/Consumer";
 import { LoginContext } from "../Context";
-import { getLoginCookie } from "../constant/core";
-import {
-  useLoginMutation,
-  useLogOutMutation,
-  useMeQuery,
-} from "../generated/graphql";
-import { useRouter } from "next/dist/client/router";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Consume } from "../Context/Consumer";
+import { useLogOutMutation, useMeQuery } from "../generated/graphql";
 
 interface Props {
   LoginData: LoginContextType;
@@ -70,7 +64,7 @@ const NavBar = ({ LoginData }: Props) => {
             <Menu>
               <MenuButton
                 variant="unstyled"
-                as={Link}
+                as={Button}
                 rightIcon={<ChevronDownIcon />}
               >
                 {LoginData.data?.me?.username}
@@ -100,7 +94,7 @@ const NavBar = ({ LoginData }: Props) => {
             <Menu>
               <MenuButton
                 variant="unstyled"
-                as={Link}
+                as={Button}
                 rightIcon={<ChevronDownIcon />}
               >
                 Login
