@@ -59,8 +59,6 @@ const Register = ({ ShowPopupData }: Props) => {
             }
           }
 
-          console.log(newVal);
-
           //   const res = await register({
           //     variables: { options: values },
           //     update: (caches, { data }) => {
@@ -96,10 +94,9 @@ const Register = ({ ShowPopupData }: Props) => {
               type="password"
               margin={true}
             />
-            <SimpleGrid columns={2} alignItems="center" mt={4}>
+            <SimpleGrid columns={2} alignItems="center" mt={6}>
               <Box>
                 <Button
-                  mt={4}
                   colorScheme="teal"
                   isLoading={props.isSubmitting}
                   type="submit"
@@ -110,7 +107,6 @@ const Register = ({ ShowPopupData }: Props) => {
               <Box textAlign="end">
                 <NextLink href={configs.enumUrl.login.link}>
                   <Button
-                    mr={4}
                     colorScheme="teal"
                     // isLoading={props.isSubmitting}
                     type="submit"

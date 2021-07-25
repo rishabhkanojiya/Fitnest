@@ -74,7 +74,7 @@ const Login = ({ LoginData, ShowPopupData }: Props) => {
               margin={true}
             />
 
-            <SimpleGrid columns={2} alignItems="center" mt={4}>
+            <SimpleGrid columns={2} alignItems="center" mt={6}>
               <Box>
                 <Button
                   colorScheme="teal"
@@ -87,16 +87,12 @@ const Login = ({ LoginData, ShowPopupData }: Props) => {
               <Box textAlign="end">
                 <NextLink href={configs.enumUrl.register.link}>
                   <Button
-                    mr={4}
                     colorScheme="teal"
                     // isLoading={props.isSubmitting}
                     type="submit"
                   >
                     {configs.enumUrl.register.title}
                   </Button>
-                </NextLink>
-                <NextLink href="/forgetPass">
-                  <Link>Forgot Password?</Link>
                 </NextLink>
               </Box>
             </SimpleGrid>
