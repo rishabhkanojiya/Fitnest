@@ -24,6 +24,7 @@ import {
 import { withApollo } from "../../constant/withApollo";
 import { LoginContext, NewWorkoutContext } from "../../Context";
 import { Consume } from "../../Context/Consumer";
+import { useDeleteWorkoutMutation } from "../../generated/graphql";
 import InputField from "../InputField";
 import NewExercise from "./NewExercise";
 import NewSet from "./NewSet";
@@ -34,12 +35,7 @@ interface Props {
 }
 
 const NewWorkout = ({ NewWorkoutData }: Props) => {
-  const [workout, setWorkout] = useState({
-    title: "",
-    exercise: [],
-    set: [],
-  });
-
+  const [delWorkout] = useDeleteWorkoutMutation();
   return (
     <Fragment>
       <Modal
@@ -47,6 +43,11 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
         isOpen={NewWorkoutData.showPopup}
         onClose={() => {
           NewWorkoutData.setShowPopup(false);
+          // ShowPopupData.setPopupMessageObj(
+          //   "loginErrors",
+          //   user.data.login.error[0].errCode
+          // );
+          delWorkout({ variables: { id: NewWorkoutData?.workid } });
         }}
       >
         <ModalOverlay />
@@ -66,7 +67,6 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               variant="ghost"
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
-                setWorkout({ exercise: [], title: "", set: [] });
               }}
             >
               Submit

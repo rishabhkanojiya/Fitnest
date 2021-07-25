@@ -36,7 +36,7 @@ export class Exercise extends BaseEntity {
   exerciseWorkId: number;
 
   // @Field(() => [Workout], { nullable: true })
-  @ManyToOne(() => Workout, (w) => w.workExercise)
+  @ManyToOne(() => Workout, (w) => w.workExercise, { onDelete: "CASCADE" })
   exerciseWork: Workout;
 
   @Field(() => [Set], { nullable: true })
