@@ -34,4 +34,4 @@ const History = (props: Props) => {
   );
 };
 
-export default withApollo({ ssr: false })(History);
+export default withApollo({ ssr: true })(History);

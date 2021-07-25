@@ -23,4 +23,4 @@ const Exercise = (props: Props) => {
 
 // const ExerciseConsumer = Consume(, []);
 
-export default withApollo({ ssr: false })(Exercise);
+export default withApollo({ ssr: true })(Exercise);
