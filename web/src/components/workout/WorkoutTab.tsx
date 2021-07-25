@@ -72,7 +72,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
             <Thead>
               <Tr>
                 <Th>Set</Th>
-                <Th isNumeric>Weight</Th>
+                <Th isNumeric>Weight (kg)</Th>
                 <Th isNumeric>Reps</Th>
               </Tr>
             </Thead>

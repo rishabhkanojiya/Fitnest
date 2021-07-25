@@ -108,7 +108,7 @@ const NewSet = ({ exerciseId }: Props) => {
               <Thead>
                 <Tr>
                   <Th>Set</Th>
-                  <Th isNumeric>Weight</Th>
+                  <Th isNumeric>Weight (KG)</Th>
                   <Th isNumeric>Reps</Th>
                   <Th></Th>
                 </Tr>
