@@ -116,6 +116,14 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
     return <TableSkel />;
   }
 
+  if (!LoginData?.data?.me?.id) {
+    return (
+      <Box textAlign="center" mt={10}>
+        <Heading size="lg">Login To Create A Workout</Heading>
+      </Box>
+    );
+  }
+
   return <Fragment>{renderUserWorks(data)}</Fragment>;
 };
 

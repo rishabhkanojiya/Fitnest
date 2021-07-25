@@ -11,8 +11,11 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useRouter } from "next/dist/client/router";
 import React, { Fragment } from "react";
 import Layout from "../components/Layout";
+import { isServer } from "../constant/actions";
+import configs from "../constant/configs";
 import {
   LoginContextType,
   NewWorkoutContextType,
@@ -31,6 +34,7 @@ interface Props {
 }
 
 const Profile = ({ LoginData, NewWorkoutData }: Props) => {
+  const router = useRouter();
   let data, loading;
 
   if (LoginData?.data?.me?.id) {
@@ -40,6 +44,10 @@ const Profile = ({ LoginData, NewWorkoutData }: Props) => {
 
     data = userWOrk?.data?.workoutCounts;
     loading = userWOrk.loading;
+  }
+
+  if (!LoginData?.data?.me?.id && !isServer()) {
+    router.push(configs.enumUrl.login.link);
   }
 
   return (
