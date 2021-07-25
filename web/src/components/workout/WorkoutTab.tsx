@@ -2,18 +2,14 @@ import {
   Box,
   Divider,
   Heading,
-  SimpleGrid,
-  Skeleton,
   Table,
-  TableCaption,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment } from "react";
 import {
   LoginContextType,
   NewWorkoutContextType,
@@ -25,9 +21,6 @@ import {
   useUserWorkoutsQuery,
 } from "../../generated/graphql";
 import TableSkel from "../Skeleton/table";
-import Title from "./title";
-import NewExercise from "./NewExercise";
-// import { usePrevious } from "../../constant/utils/prevVal";
 
 interface Props {
   LoginData: LoginContextType;
@@ -104,11 +97,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
               <Heading size="lg" m={2}>
                 {title}
               </Heading>
-              {/* {workExercise.map((a) => {
-                return (
-                  
-                );
-              })} */}
+
               {renderExer(workExercise)}
             </Box>
           </Fragment>
@@ -121,14 +110,7 @@ const WorkoutTab = ({ LoginData, NewWorkoutData }: Props) => {
     return <TableSkel />;
   }
 
-  return (
-    <Fragment>
-      {/* <Title />
-      <NewExercise /> */}
-
-      {renderUserWorks(data)}
-    </Fragment>
-  );
+  return <Fragment>{renderUserWorks(data)}</Fragment>;
 };
 
 export default Consume(WorkoutTab, [LoginContext, NewWorkoutContext]);

@@ -66,7 +66,6 @@ const NewExercise = ({ NewWorkoutData }: Props) => {
         caches.evict({ fieldName: "workoutExercises" });
       },
     });
-    // setExercise([...exercise, exer.data.createExercise]);
     setOpenExer(false);
   };
 

@@ -41,13 +41,22 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
       <Modal
         size="3xl"
         isOpen={NewWorkoutData.showPopup}
-        onClose={() => {
+        onClose={async () => {
           NewWorkoutData.setShowPopup(false);
-          // ShowPopupData.setPopupMessageObj(
-          //   "loginErrors",
-          //   user.data.login.error[0].errCode
-          // );
-          delWorkout({ variables: { id: NewWorkoutData?.workid } });
+          if (NewWorkoutData?.workid) {
+            delWorkout({
+              variables: { id: NewWorkoutData?.workid },
+
+              update: (caches) => {
+                caches.evict({ fieldName: "workoutExercises" });
+                caches.evict({ fieldName: "exerciseSet" });
+              },
+            }).then((res) => {
+              if (res.data.deleteWorkout) {
+                NewWorkoutData.setWorkid(null);
+              }
+            });
+          }
         }}
       >
         <ModalOverlay />
@@ -67,6 +76,7 @@ const NewWorkout = ({ NewWorkoutData }: Props) => {
               variant="ghost"
               onClick={() => {
                 NewWorkoutData.setShowPopup(false);
+                NewWorkoutData.setWorkid(null);
               }}
             >
               Submit

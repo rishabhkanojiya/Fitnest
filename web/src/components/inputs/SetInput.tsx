@@ -15,12 +15,12 @@ const SetInput = ({ isSubmitting, exerciseId, setNoId }: Props) => {
     <Tr>
       <Td>{setNoId}</Td>
       <Td>
-        <Form id="sets">
+        <Form id={"sets" + exerciseId}>
           <InputField name={"weight"} placeholder={"Weight"} />
         </Form>
       </Td>
       <Td>
-        <Form id="sets">
+        <Form id={"sets" + exerciseId}>
           <InputField name={"reps"} placeholder={"Password"} />
         </Form>
       </Td>
